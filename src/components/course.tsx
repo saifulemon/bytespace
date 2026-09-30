@@ -9,7 +9,7 @@ import { Footer, Header, HeaderSlot } from "@/components/site";
 import { courseToCartItem, useCart } from "@/components/cart";
 import { usePreview } from "@/components/preview-modal";
 import { useToast } from "@/components/feedback";
-import { courses, images } from "@/data/site";
+import { courseTitle, courses, images, previewVideos } from "@/data/site";
 
 export type CourseTab = "about" | "lessons" | "reviews";
 
@@ -156,8 +156,9 @@ function CourseHero() {
           data-testid="play-preview"
           onClick={() =>
             preview({
-              title: "Build Digital Asset: A Comprehensive Guide",
+              title: courseTitle,
               subtitle: "Course preview",
+              videoId: previewVideos[courseTitle],
             })
           }
           className="absolute top-1/2 left-1/2 grid size-[104px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[24px] border border-[#4f4f4f] bg-[rgba(61,61,61,0.24)] backdrop-blur-[40px] ml-[16px] mt-[16.5px] transition-transform hover:scale-105"
