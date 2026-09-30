@@ -9,12 +9,12 @@ import { CourseCard } from "@/components/CourseCard";
 import { avatars, courses, images } from "@/data/site";
 
 const categories = [
+  "design",
   "development",
   "it",
   "business",
   "marketing",
   "photography",
-  "development",
 ] as const;
 const categoryLabels = ["Design", "Development", "IT & Software", "Business", "Marketing", "Photography"];
 
