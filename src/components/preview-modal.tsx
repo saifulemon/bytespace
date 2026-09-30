@@ -13,7 +13,7 @@ import { images } from "@/data/site";
 
 const TOTAL = 30;
 
-type PreviewConfig = { title: string; subtitle?: string };
+type PreviewConfig = { title: string; subtitle?: string; videoId?: string };
 
 const PreviewContext = createContext<(config: PreviewConfig) => void>(() => {});
 
@@ -66,6 +66,7 @@ function PreviewPlayer({
       <VideoPlayer
         poster={images.courseHero}
         duration={TOTAL}
+        videoId={config.videoId}
         sizes="(max-width: 768px) 100vw, 760px"
       />
     </Modal>

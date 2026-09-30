@@ -158,6 +158,23 @@ export const navLinks = [
   { label: "Creators", href: "/creator" },
 ] as const;
 
+export const courseTitle = "Build Digital Asset: A Comprehensive Guide";
+
+/**
+ * Real, topic-matching YouTube videos behind the preview player, keyed by the
+ * preview title used in `usePreview()`. Every id was verified as public and
+ * embeddable; a missing key simply falls back to the simulated clip.
+ */
+export const previewVideos: Record<string, string> = {
+  [courseTitle]: "YqQx75OPRa0",
+  "Module 1: Introduction to Digital Assets": "jQ1sfKIl50E",
+  "Module 2: Design Principles for Impact": "9EPTM91TBDU",
+  "Module 4: User-Centric Design Strategies": "t0aCoqXKFOU",
+  "Module 5: Interactive Media and Engagement": "3JB5BQfcIQc",
+  "Module 6: Project Showcase and Critique": "w-PoV_sIWos",
+  "Module 7: Optimizing Digital Assets for Various Platforms": "pxTx8uQxUOM",
+};
+
 /** Category tabs shown on /search and as topic chips on the home page. */
 export const searchTabs: string[] = [
   "Featured",
