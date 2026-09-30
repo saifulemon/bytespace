@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, type ComponentProps, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { CartIcon, CloseIcon, LogoMark, MenuIcon } from "@/components/icons";
@@ -55,10 +56,53 @@ export function HeaderSlot() {
   return <div aria-hidden="true" className="h-[76px] w-full sm:h-[120px]" />;
 }
 
+/** Underline that scales in when the link points at the current route. */
+function ActiveMarker({ on }: { on: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "absolute -bottom-[3px] right-0 left-0 h-[2px] origin-left rounded-full bg-current transition-transform duration-300 motion-reduce:transition-none",
+        on ? "scale-x-100" : "scale-x-0",
+      )}
+    />
+  );
+}
+
+/** Link text plus its active underline, so the bar matches the text width. */
+function NavLabel({
+  children,
+  active,
+  className,
+}: {
+  children: ReactNode;
+  active: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={cn("relative", active && "font-medium", className)}>
+      {children}
+      <ActiveMarker on={active} />
+    </span>
+  );
+}
+
+/** Does `href` own the current pathname? Catalog detail pages count as Courses. */
+function useIsActive() {
+  const pathname = usePathname();
+  return (href: string) => {
+    if (href === "/") return pathname === "/";
+    if (href === "/search")
+      return pathname.startsWith("/search") || pathname.startsWith("/course");
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+}
+
 export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const cart = useCart();
+  const isActive = useIsActive();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -117,23 +161,37 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
         </div>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-start gap-6 md:flex">
-          {navLinks.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className={cn(navLink, l.label === "Home" ? "leading-[19px]" : "leading-[26px]")}
-            >
-              <span className={l.label === "Home" ? "font-medium" : ""}>{l.label}</span>
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const active = isActive(l.href);
+            return (
+              <Link
+                key={l.label}
+                href={l.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(navLink, l.label === "Home" ? "leading-[19px]" : "leading-[26px]")}
+              >
+                <NavLabel active={active} className={l.label === "Home" ? "font-medium" : undefined}>
+                  {l.label}
+                </NavLabel>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className={cn("flex items-center gap-6 transition-[color] duration-300", fg)}>
-          <Link href="/login" className={cn(actionLink, "hidden sm:inline")}>
-            Sign In
+          <Link
+            href="/login"
+            aria-current={isActive("/login") ? "page" : undefined}
+            className={cn(actionLink, "hidden sm:inline")}
+          >
+            <NavLabel active={isActive("/login")}>Sign In</NavLabel>
           </Link>
-          <Link href="/register" className={cn(actionLink, "hidden sm:inline")}>
-            Join Us
+          <Link
+            href="/register"
+            aria-current={isActive("/register") ? "page" : undefined}
+            className={cn(actionLink, "hidden sm:inline")}
+          >
+            <NavLabel active={isActive("/register")}>Join Us</NavLabel>
           </Link>
           <button
             type="button"
@@ -163,30 +221,36 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
           className="absolute inset-x-0 top-full border-b border-hairline bg-white shadow-[0_18px_44px_-30px_rgba(16,24,40,0.5)] md:hidden"
         >
           <Container className="flex flex-col py-3">
-            {navLinks.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                className="border-b border-neutral-100 py-3 text-[16px] leading-[26px] text-neutral-950 last:border-b-0 hover:text-primary-600"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {navLinks.map((l) => {
+              const active = isActive(l.href);
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  className="border-b border-neutral-100 py-3 text-[16px] leading-[26px] text-neutral-950 last:border-b-0 hover:text-primary-600"
+                >
+                  <NavLabel active={active}>{l.label}</NavLabel>
+                </Link>
+              );
+            })}
             <div className="mt-3 flex items-center gap-3 border-t border-neutral-100 pt-3 sm:hidden">
               <Link
                 href="/login"
                 onClick={() => setMenuOpen(false)}
+                aria-current={isActive("/login") ? "page" : undefined}
                 className="inline-flex h-[44px] flex-1 items-center justify-center rounded-[24px] border border-hairline text-[16px] leading-6 text-neutral-950"
               >
-                Sign In
+                <NavLabel active={isActive("/login")}>Sign In</NavLabel>
               </Link>
               <Link
                 href="/register"
                 onClick={() => setMenuOpen(false)}
+                aria-current={isActive("/register") ? "page" : undefined}
                 className="inline-flex h-[44px] flex-1 items-center justify-center rounded-[24px] bg-secondary-400 text-[16px] leading-6 text-neutral-950"
               >
-                Join Us
+                <NavLabel active={isActive("/register")}>Join Us</NavLabel>
               </Link>
             </div>
           </Container>
@@ -202,8 +266,8 @@ export function Footer() {
 
   return (
     <footer className="w-full border-t border-hairline bg-white">
-      <Container className="flex flex-col gap-14 pt-12 pb-10 md:gap-24 md:pt-[70px] md:pb-[48px]">
-        <div className="flex flex-col gap-10 md:gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]">
+      <Container className="flex flex-col gap-14 pt-12 pb-10 md:gap-24 md:pt-[70px] md:pb-[48px] min-[1440px]:gap-[130px]!">
+        <div className="flex flex-col gap-10 md:gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]!">
           <div className="flex w-full shrink-0 flex-col gap-8 md:gap-[45px] min-[1440px]:w-[528px]">
             <div className="flex flex-col gap-4">
               <div className="h-[37px]">
@@ -243,7 +307,7 @@ export function Footer() {
                         type="button"
                         data-testid={`footer-${l.label.toLowerCase()}`}
                         onClick={() => setInfo(l.label)}
-                        className="inline-block py-1 leading-[22px] text-neutral-950 hover:text-primary-600"
+                        className="relative inline-block leading-[22px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
                       >
                         {l.label}
                       </button>
@@ -270,7 +334,7 @@ export function Footer() {
                   type="button"
                   data-testid={`footer-${l.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => setInfo(l)}
-                  className="inline-block py-1 text-left text-[12px] leading-[19px] text-neutral-950 hover:text-primary-600"
+                  className="relative inline-block text-left text-[12px] leading-[19px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
                 >
                   {l}
                 </button>
@@ -312,7 +376,7 @@ function FooterLink({ label, href }: { label: string; href: string }) {
     <li className="text-[14px] leading-[22px]">
       <Link
         href={href}
-        className="inline-block py-1 leading-[22px] text-neutral-950 hover:text-primary-600"
+        className="relative inline-block leading-[22px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
       >
         {label}
       </Link>
