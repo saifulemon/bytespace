@@ -18,7 +18,7 @@ export function CourseShell({
   activeTab,
   tabPtClass,
   bodyPbClass,
-  bodyWidthClass = "lg:w-[725px]",
+  bodyWidthClass = "min-[1440px]:w-[725px]",
   children,
 }: {
   activeTab: CourseTab;
@@ -38,7 +38,7 @@ export function CourseShell({
 
       <section className="bg-white">
         <div className="mx-auto w-full max-w-[1440px] px-6 pb-16 lg:px-[120px] lg:pb-0">
-          <div className={`flex flex-wrap gap-4 pt-14 lg:w-[725px] ${tabPtClass}`}>
+          <div className={`flex flex-wrap gap-4 pt-14 min-[1440px]:w-[725px] ${tabPtClass}`}>
             {tabs.map((tab) => (
               <Link
                 key={tab.key}
@@ -56,13 +56,13 @@ export function CourseShell({
 
           <div className={`mt-10 flex-1 ${bodyWidthClass} ${bodyPbClass}`}>{children}</div>
 
-          <div className="mt-14 lg:hidden">
+          <div className="mt-14 min-[1440px]:hidden">
             <EnrollCard />
           </div>
         </div>
       </section>
 
-      <aside className="pointer-events-none absolute inset-x-0 top-[416px] hidden lg:block">
+      <aside className="pointer-events-none absolute inset-x-0 top-[416px] hidden min-[1440px]:block">
         <div className="pointer-events-auto mx-auto max-w-[1440px] px-[120px]">
           <div className="ml-auto w-[412px]">
             <EnrollCard />
@@ -78,7 +78,7 @@ export function CourseShell({
 function CourseHero() {
   return (
     <div className="relative mx-auto w-full max-w-[1440px] px-6 pt-[52px] pb-16 lg:px-[122px] lg:pb-[62px]">
-      <div className="flex flex-wrap items-start justify-between gap-6 lg:w-[1283px]">
+      <div className="flex flex-wrap items-start justify-between gap-6 min-[1440px]:w-[1283px]">
         <div className="flex max-w-[860px] flex-col gap-6">
           <div className="flex flex-col gap-2">
             <h1 className="font-heading text-[28px] leading-[34px] font-semibold tracking-[-0.01em] text-neutral-50 [word-spacing:-1.2px] md:text-[36px] md:leading-[43px]">

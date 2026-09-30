@@ -37,7 +37,7 @@ export function CourseCard({
 
       <div className="mt-[21px] flex flex-col gap-4">
         <div className="flex items-start justify-between gap-2.5">
-          <div className="flex flex-col">
+          <div className="flex min-w-0 flex-col">
             <Link
               href="/course"
               className={cn(

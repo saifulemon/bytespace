@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, type ComponentProps, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { CartIcon, LogoMark } from "@/components/icons";
+import { CartIcon, CloseIcon, LogoMark, MenuIcon } from "@/components/icons";
 import { NewsletterForm } from "@/components/forms";
 import { footerBrowse, footerPlatform, navLinks } from "@/data/site";
 
@@ -51,15 +51,34 @@ export function HeaderSlot() {
 }
 
 export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const [stuck, setStuck] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setStuck(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    const mq = window.matchMedia("(min-width: 768px)");
+    const onWide = () => {
+      if (mq.matches) setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onWide);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onWide);
+    };
+  }, [menuOpen]);
+
+  const stuck = scrolled || menuOpen;
   const dark = tone === "dark" || stuck;
   const fg = dark ? "text-neutral-950" : "text-neutral-50";
   const navLink = cn("text-[16px] transition-[color,opacity] duration-300 hover:opacity-70", fg);
@@ -110,8 +129,54 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
           <button type="button" aria-label="Cart" className="grid size-6 place-items-center">
             <CartIcon className="size-6" />
           </button>
+          <button
+            type="button"
+            className="-mr-2 grid size-10 place-items-center md:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
+          </button>
         </div>
       </Container>
+
+      {menuOpen ? (
+        <div
+          id="mobile-menu"
+          className="absolute inset-x-0 top-full border-b border-hairline bg-white shadow-[0_18px_44px_-30px_rgba(16,24,40,0.5)] md:hidden"
+        >
+          <Container className="flex flex-col py-3">
+            {navLinks.map((l) => (
+              <Link
+                key={l.label}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="border-b border-neutral-100 py-3 text-[16px] leading-[26px] text-neutral-950 last:border-b-0 hover:text-primary-600"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <div className="mt-3 flex items-center gap-3 border-t border-neutral-100 pt-3 sm:hidden">
+              <Link
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex h-[44px] flex-1 items-center justify-center rounded-[24px] border border-hairline text-[16px] leading-6 text-neutral-950"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex h-[44px] flex-1 items-center justify-center rounded-[24px] bg-secondary-400 text-[16px] leading-6 text-neutral-950"
+              >
+                Join Us
+              </Link>
+            </div>
+          </Container>
+        </div>
+      ) : null}
     </header>
   );
 }
@@ -120,8 +185,8 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-hairline bg-white">
       <Container className="flex flex-col gap-[130px] pt-[70px] pb-[48px]">
-        <div className="flex flex-col gap-12 lg:flex-row lg:gap-[92px]">
-          <div className="flex w-full shrink-0 flex-col gap-[45px] lg:w-[528px]">
+        <div className="flex flex-col gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]">
+          <div className="flex w-full shrink-0 flex-col gap-[45px] min-[1440px]:w-[528px]">
             <div className="flex flex-col gap-4">
               <div className="h-[37px]">
                 <Logo dark />
@@ -134,7 +199,7 @@ export function Footer() {
             <NewsletterForm />
           </div>
 
-          <div className="flex flex-1 flex-wrap gap-10 lg:flex-nowrap lg:items-start lg:justify-between">
+          <div className="flex flex-1 flex-wrap gap-10 min-[1440px]:flex-nowrap min-[1440px]:items-start min-[1440px]:justify-between">
             <div className="flex w-[167px] shrink-0 flex-col gap-6">
               <span className="text-[16px] leading-6 text-neutral-950">Browse</span>
               <ul className="flex flex-col gap-4">
@@ -144,7 +209,7 @@ export function Footer() {
               </ul>
             </div>
 
-            <ul className="flex w-[167px] shrink-0 flex-col gap-4 lg:pt-[48px]">
+            <ul className="flex w-[167px] shrink-0 flex-col gap-4 min-[1440px]:pt-[48px]">
               {footerBrowse.slice(5).map((l) => (
                 <FooterLink key={l.label} {...l} />
               ))}

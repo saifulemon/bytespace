@@ -41,7 +41,7 @@ function Heading({ children }: { children: React.ReactNode }) {
 
 export default function LessonsPage() {
   return (
-    <CourseShell activeTab="lessons" tabPtClass="lg:pt-[79px]" bodyPbClass="lg:pb-[83px]" bodyWidthClass="lg:w-[723px]">
+    <CourseShell activeTab="lessons" tabPtClass="lg:pt-[79px]" bodyPbClass="lg:pb-[83px]" bodyWidthClass="min-[1440px]:w-[723px]">
       <div className="flex flex-col gap-6">
         <Heading>Explore the Modules</Heading>
         <p className="text-[16px] leading-[26px] text-neutral-700">

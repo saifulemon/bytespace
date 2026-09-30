@@ -49,13 +49,49 @@ the page first** — lazy-loaded `next/image`s must finish before the screenshot
 - **The header's stuck state must not apply at `scrollY === 0`** (that is what the
   screenshots capture). It toggles at `window.scrollY > 8`.
 
+## Responsive
+
+The Figma file only defines the 1440px layout, so everything below 1440 is derived.
+**Nothing may change the 1440px rendering** — every responsive rule is expressed with a
+variant that either does not match at 1440 (`max-md:`, `max-[1099px]:`) or resolves to the
+same value (`min-[1440px]:`). Re-run the pixel score after any responsive edit.
+
+```bash
+# no horizontal overflow + no clipped text, 9 routes x 12 widths (320..1440)
+node .opencode/qa/responsive.js '[["/","home"],["/search","search"],["/course","course"],["/course/lessons","lessons"],["/course/reviews","reviews"],["/creator","creator"],["/login","login"],["/register","register"],["/404","notfound"]]' '[320,360,390,414,480,640,768,834,1024,1100,1280,1440]'
+```
+
+Rules that came out of that audit:
+
+- **Design-fixed widths use `min-[1440px]:`, not `lg:`/`xl:`.** `lg:` fires at 1024px where a
+  1198/1200/1283px-wide block inside the padded container is clipped by the hero's
+  `overflow-hidden`. The footer, the course body/aside, the creator hero and both growth
+  rows were all switched. Below 1440 those blocks fall back to `w-full`.
+- **The course enrolment aside only appears at `min-[1440px]:`.** Between 1024 and 1439 the
+  725px body + 412px aside do not fit side by side; the inline `<EnrollCard />` (below the
+  content) covers that range instead.
+- **Absolute collages stack below `md`** — the growth photos/badges/ornaments are
+  `max-md:static` (plus `order-first` on the photo) inside a `max-md:flex-col` wrapper, and
+  the decorative `Ornament`s go `max-md:hidden`.
+- **Right-side hero ornaments are anchored with `right`, not `left`** (`right: -161` etc.) so
+  they bleed off the right edge at every width. The values are computed as
+  `1440 - (left + width)` and are byte-identical at 1440.
+- **Sections that wrap must use `min-h-`, not `h-`** (`Partners` was `h-[202px]` and its
+  logos spilled 41px past the grey band at 360px).
+- **Use `hidden` + an inverse variant for breakpoint-gated decor.** `flex … max-[1099px]:hidden`
+  is backwards — it shows the element *above* the breakpoint. Correct is `hidden … max-[1099px]:flex`.
+- **The header has a mobile menu below `md`** (`MenuIcon`/`CloseIcon`, panel `#mobile-menu`).
+  The desktop nav is `hidden md:flex`, so without it 320–767px has no navigation at all.
+  It closes on link click, `Escape`, and when the viewport crosses 768px.
+
 ## Components worth knowing
 
-- `src/components/site.tsx` — `Container`, `Logo` (`dark`, `wordmark`), `Header`,
-  `HeaderSlot`, `Footer`, `Button`. It is a `"use client"` file because of the scroll listener.
+- `src/components/site.tsx` — `Container`, `Logo` (`dark`, `wordmark`), `Header`
+  (sticky + mobile menu), `HeaderSlot`, `Footer`, `Button`. It is a `"use client"` file
+  because of the scroll listener.
 - `CourseShell` (`course.tsx`) gives about/lessons/reviews an identical banner, tab row,
-  enrolment card and footer; pass `bodyWidthClass` (`lg:w-[725px]` default, `lg:w-[723px]` for
-  lessons/reviews) and `bodyPbClass`.
+  enrolment card and footer; pass `bodyWidthClass` (`min-[1440px]:w-[725px]` default,
+  `min-[1440px]:w-[723px]` for lessons/reviews) and `bodyPbClass`.
 - `CourseCard` has two variants: **tight** (home grid, search, creator) and **loose**
   (auth aside, home growth section). The meta-pill row and the badge overlay are
   **intentionally not rendered** — they do not appear in the design reference.
