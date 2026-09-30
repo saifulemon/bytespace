@@ -85,6 +85,35 @@ the page first** — lazy-loaded `next/image`s must finish before the screenshot
   strings (404 `h1`, growth `&`, course `h1`). Apply more only when a measured, single-cause
   drift is visible, and re-score to confirm — per-string tracking hacks are whack-a-mole.
 
+## Git workflow
+
+All work goes on the **`saiful`** branch, then ships to `main` via a PR that is merged
+immediately. Do this for every change:
+
+```bash
+# 1. make sure we're on saiful and it's current with main
+git checkout saiful && git pull
+
+# 2. commit your work
+git add -A && git commit -m "<message>"
+
+# 3. push
+git push
+
+# 4. open the PR (saiful -> main)
+gh pr create --base main --head saiful --title "<title>" --body "<what/why>"
+
+# 5. merge it
+gh pr merge --merge
+
+# 6. resync saiful to main so the next change starts clean
+git checkout main && git pull
+git branch -f saiful main && git push origin saiful
+git checkout saiful
+```
+
+Never commit directly to `main`.
+
 ## Housekeeping
 
 - `AGENTS.md` is rewritten by `next dev`; keep it committed with your changes.
