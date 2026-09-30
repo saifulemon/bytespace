@@ -1,1 +1,92 @@
 @AGENTS.md
+
+# ByteSpace
+
+Pixel-faithful static recreation of a Figma course-marketplace design (9 screens).
+Next.js 16 App Router under `src/`, React 19, TypeScript, Tailwind CSS v4.
+
+## Commands
+
+```bash
+npm run lint                 # eslint
+npm run build                # must stay clean
+npm run start -- -p 3111     # local preview used by the QA harness
+```
+
+All 9 routes are statically prerendered. Route heights are part of the spec and must not
+change: `/` 6377, `/search` 3853, `/course` 2717, `/course/lessons` 2883,
+`/course/reviews` 3449, `/creator` 2136, `/login` 1024, `/register` 1024, 404 1485 (at
+1440px wide). Check them after any layout change:
+
+```bash
+node .opencode/qa/shoot.js '[["/","home",1440,1024,true],["/search","search",1440,1024,true],["/course","course",1440,1024,true],["/course/lessons","lessons",1440,1024,true],["/course/reviews","reviews",1440,1024,true],["/creator","creator",1440,1024,true],["/login","login",1440,1024,true],["/register","register",1440,1024,true],["/404","notfound",1440,1024,true]]'
+python3 .opencode/qa/score.py     # per-route mean abs pixel diff vs .figma-ref/
+```
+
+`.opencode/` and `.figma-ref/` are gitignored local tooling. **`shoot.js` deliberately walks
+the page first** — lazy-loaded `next/image`s must finish before the screenshot, and it forces
+`scrollY` back to 0 or the sticky header is captured in its stuck state.
+
+## Non-obvious rules
+
+- **`cn()` in `src/lib/cn.ts` is plain concatenation — there is no `tailwind-merge`.** A later
+  conflicting class does *not* win. Emit exactly one of any conflicting utility per element.
+- **Figma `strokeAlign: INSIDE` strokes do not consume layout space.** To match a stroked
+  box in CSS, use `border` **and** reduce padding by 1px (`p-[40px]` → `p-[39px]`).
+- **Figma rounds line-height to whole pixels:** `round(fontSize × ratio)` (72→86, 44→53,
+  36→43, 18/160%→29, 16/160%→26, …). Always use a px `leading-[…]`, never a percentage —
+  `leading-[160%]` will drift.
+- **`right-0` inside `Container` is x=1440, not 1320** — absolute positioning resolves against
+  the padding box, and `Container` has 120px padding at `lg`.
+- **Fixed-px grid widths need `min-[1440px]:`, not `lg:`** — `lg:` applies at 1024px where a
+  1200px-wide grid inside a 1200px container would overflow.
+- **No `vh`, `h-screen` or `min-h-screen` anywhere.** Section heights are explicit px so
+  screenshots are deterministic; don't introduce viewport-relative units.
+- **Don't put `<Header />` back inside a hero.** Every blue hero is
+  `relative isolate overflow-hidden` — an `isolate` stacking context would trap the fixed
+  header and later siblings could paint over it. `Header` renders only the `fixed` bar at page
+  root; the hero renders `<HeaderSlot />` (a 120px spacer) to keep the flow height.
+- **The header's stuck state must not apply at `scrollY === 0`** (that is what the
+  screenshots capture). It toggles at `window.scrollY > 8`.
+
+## Components worth knowing
+
+- `src/components/site.tsx` — `Container`, `Logo` (`dark`, `wordmark`), `Header`,
+  `HeaderSlot`, `Footer`, `Button`. It is a `"use client"` file because of the scroll listener.
+- `CourseShell` (`course.tsx`) gives about/lessons/reviews an identical banner, tab row,
+  enrolment card and footer; pass `bodyWidthClass` (`lg:w-[725px]` default, `lg:w-[723px]` for
+  lessons/reviews) and `bodyPbClass`.
+- `CourseCard` has two variants: **tight** (home grid, search, creator) and **loose**
+  (auth aside, home growth section). The meta-pill row and the badge overlay are
+  **intentionally not rendered** — they do not appear in the design reference.
+- `AuthShell` renders `<Logo wordmark={false} />`: the wordmark's Figma text node has an empty
+  fill, so it is invisible in the design.
+- `data/site.ts` is the single source for images, avatars, courses and nav/footer links.
+
+## Artwork
+
+- Ornament files are pre-tinted: `<ref>-lime.png` / `<ref>-white.png`; the `<Ornament>`
+  `color` prop derives the filename. Default is `white`.
+- The white instances of `e3b55902` are horizontally flipped — the flip is baked into
+  `e3b55902_387x387-white.png`.
+- The hero's lime ring (`Ellipse 7`) is a stroke, not a fill: `border-[320px] border-secondary-500`
+  on a `rounded-full` box, clipped by the hero's `overflow-hidden`.
+- Figma mask groups tint artwork with a SOLID-fill rectangle at `blendMode: HARD_LIGHT`
+  (`#d4fb20` lime, `#f5f5f6` grey).
+
+## Known limitations (don't "fix")
+
+- Headings use Google's Poppins; the design uses `Poppins-SemiBold`. Glyphs differ slightly
+  (~1% wider, digits ~4% taller). There is no local fix.
+- Reference screenshots in `.figma-ref/` are 720px wide upscaled ×2, so text has an
+  irreducible blur floor. Tiny text can vanish above the diff threshold in the reference —
+  that is a reference artifact, not a bug in the build.
+- A handful of one-off `letterSpacing`/`wordSpacing` corrections exist on individual
+  strings (404 `h1`, growth `&`, course `h1`). Apply more only when a measured, single-cause
+  drift is visible, and re-score to confirm — per-string tracking hacks are whack-a-mole.
+
+## Housekeeping
+
+- `AGENTS.md` is rewritten by `next dev`; keep it committed with your changes.
+- Never write secrets into the repo. The Figma PAT belongs in the shell environment and is
+  referenced as `{env:FIGMA_API_KEY}` in `opencode.json`.
