@@ -146,13 +146,23 @@ export function FacebookIcon(props: IconProps) {
 }
 
 const categoryPaths: Record<string, string> = {
+  design:
+    "M9.5 26.5L23 13M20.3 10.3 24.7 14.7M23 13L26.5 9.5M26.5 9.5 23.5 9M26.5 9.5 27 12.5" +
+    "M10.5 10.5L27 27M13.6 13.6 16.2 16.2M17.1 17.1 19.7 19.7M20.6 20.6 23.2 23.2" +
+    "M29 27.5h.01M8.5 8.5h.01",
   development:
-    "M13 6L4 18l9 12 9-12-9-12Zm0 0v24M4 18h18" ,
-  it: "M5 9h26v16H5zM11 30h14M16 25v5",
+    "M10 13V9.5H26V13M10 23V26.5H26V23M15.8 13L12 18L15.8 23M20.2 13L24 18L20.2 23",
+  it: "M11 9H25A2 2 0 0 1 27 11V21H9V11A2 2 0 0 1 11 9ZM5 24H31",
   business:
-    "M6 26V16m7 10V10m7 16v-7m7 7V6",
-  marketing: "M6 14v14h6l10 6V8l-10 6H6Zm22-4a5 5 0 0 1 0 10",
-  photography: "M5 11h6l3-4h6l3 4h6v16H5V11Zm11 4.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z",
+    "M6 7H17V29H6ZM17 14H29V29H17Z" +
+    "M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01M9 19h.01M12 19h.01M15 19h.01M9 23h.01M12 23h.01M15 23h.01M9 27h.01M12 27h.01M15 27h.01" +
+    "M20.5 18h.01M24.5 18h.01M20.5 22h.01M24.5 22h.01M20.5 26h.01M24.5 26h.01",
+  marketing:
+    "M25 25h.01M19.6 25A5.4 5.4 0 0 1 25 19.6M14.6 25A10.4 10.4 0 0 1 25 14.6M9.6 25A15.4 15.4 0 0 1 25 9.6M25.5 25.5 30 30",
+  photography:
+    "M10 9H26A2 2 0 0 1 28 11V25A2 2 0 0 1 26 27H10A2 2 0 0 1 8 25V11A2 2 0 0 1 10 9Z" +
+    "M16 13.1A3.4 3.4 0 1 0 16 19.9 3.4 3.4 0 1 0 16 13.1" +
+    "M11 25.2A5.6 5.6 0 0 1 21 25.2",
 };
 
 export function CategoryIcon({ name, ...props }: { name: keyof typeof categoryPaths } & IconProps) {
