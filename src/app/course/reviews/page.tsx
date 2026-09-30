@@ -68,7 +68,7 @@ function Stars() {
 
 export default function ReviewsPage() {
   return (
-    <CourseShell activeTab="reviews" tabPtClass="lg:pt-[79px]" bodyPbClass="lg:pb-[91px]" bodyWidthClass="lg:w-[723px]">
+    <CourseShell activeTab="reviews" tabPtClass="lg:pt-[79px]" bodyPbClass="lg:pb-[91px]" bodyWidthClass="min-[1440px]:w-[723px]">
       <div className="flex flex-col gap-6">
         <Heading>What Learners Are Saying</Heading>
         <p className="text-[16px] leading-[26px] text-neutral-700">
@@ -77,8 +77,8 @@ export default function ReviewsPage() {
           embarked on the transformative journey of mastering digital asset creation.
         </p>
 
-        <div className="flex flex-col gap-6 rounded-[16px] border border-hairline bg-white p-[39px] sm:flex-row sm:items-center sm:gap-6">
-          <div className="flex h-[140px] w-[129px] shrink-0 flex-col items-center justify-center rounded-[8px] bg-secondary-400">
+        <div className="flex flex-col gap-6 rounded-[16px] border border-hairline bg-white p-[39px] lg:flex-row lg:items-center lg:gap-6">
+          <div className="flex h-[140px] w-[129px] shrink-0 flex-col items-center justify-center rounded-[8px] bg-secondary-400 max-lg:mx-auto">
             <span className="text-[14px] leading-[17px] font-medium text-neutral-950">Ratings</span>
             <span className="font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950">
               4.7

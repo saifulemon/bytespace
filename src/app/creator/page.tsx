@@ -52,7 +52,7 @@ export default function CreatorPage() {
         <HeaderSlot />
 
         <div className="relative mx-auto w-full max-w-[1440px] px-6 pt-[52px] pb-[82px] lg:px-[122px]">
-          <div className="flex flex-col gap-10 lg:w-[1198px]">
+          <div className="flex flex-col gap-10 min-[1440px]:w-[1198px]">
             <div className="flex items-start gap-6">
               <Image
                 src={images.avatar96}
@@ -80,8 +80,8 @@ export default function CreatorPage() {
             <p className="whitespace-pre-line text-[18px] leading-[29px] text-neutral-50">{bio}</p>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 lg:w-[1198px]">
-            <div className="flex gap-4">
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 min-[1440px]:w-[1198px]">
+            <div className="flex flex-wrap gap-4">
               <Stat value="3" label="Products" />
               <Stat value="12" label="Followers" />
             </div>

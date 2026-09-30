@@ -79,9 +79,9 @@ function Hero() {
           <Ornament src="/images/e3b55902_387x387.png" color="lime" style={{ left: -118, top: 221, width: 385, height: 385 }} />
           <Ornament src="/images/e3b55902_387x387.png" color="white" style={{ left: 183, top: 477, width: 175, height: 175 }} />
           <Ornament src="/images/8670b841_344x344.png" style={{ left: 18, top: 682, width: 342, height: 342 }} />
-          <Ornament src="/images/92fc70a3_372x372.png" color="lime" style={{ left: 1231, top: 221, width: 370, height: 370 }} />
-          <Ornament src="/images/f9c0e0fd_189x189.png" style={{ left: 1106, top: 464, width: 188, height: 188 }} />
-          <Ornament src="/images/cda676fe_332x332.png" style={{ left: 1127, top: 672, width: 330, height: 330 }} />
+          <Ornament src="/images/92fc70a3_372x372.png" color="lime" style={{ right: -161, top: 221, width: 370, height: 370 }} />
+          <Ornament src="/images/f9c0e0fd_189x189.png" style={{ right: 146, top: 464, width: 188, height: 188 }} />
+          <Ornament src="/images/cda676fe_332x332.png" style={{ right: -17, top: 672, width: 330, height: 330 }} />
         </div>
 
         <HeaderSlot />
@@ -111,7 +111,7 @@ function Hero() {
 
         <FloatingCards />
 
-        <div className="pointer-events-none absolute inset-x-0 top-[640px] flex justify-center gap-6 px-6 md:hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-[640px] hidden justify-center gap-6 px-6 max-[1099px]:flex">
           <StatCard />
         </div>
       </div>
@@ -121,7 +121,7 @@ function Hero() {
 
 function FloatingCards() {
   return (
-    <div className="hidden lg:block">
+    <div className="hidden min-[1100px]:block">
       <div
         className="absolute flex flex-col gap-2 rounded-[16px] bg-white p-4 backdrop-blur-[20px]"
         style={{ left: 404, top: 639, width: 208 }}
@@ -203,7 +203,7 @@ function AvatarRow({ count = 7, overflow = "2K+" }: { count?: number; overflow?:
 function Partners() {
   return (
     <section className="w-full bg-neutral-50">
-      <Container className="flex h-[202px] items-center justify-center">
+      <Container className="flex min-h-[202px] items-center justify-center py-6">
         <div className="flex flex-wrap items-center justify-center gap-x-[72px] gap-y-6">
           {Array.from({ length: 5 }).map((_, i) => (
             <Logoipsum key={i} variant={i} />
@@ -263,7 +263,7 @@ function CategoriesSection() {
           className="[&>h2]:max-w-[820px] [&>h2]:text-[36px] [&>h2]:leading-[43px]"
         />
 
-        <div className="mt-[68px] grid w-full grid-cols-2 justify-items-center gap-10 sm:grid-cols-3 xl:grid-cols-6 min-[1440px]:-ml-px min-[1440px]:w-[1202px]">
+        <div className="mt-[68px] grid w-full grid-cols-2 justify-items-center gap-10 md:grid-cols-3 xl:grid-cols-6 min-[1440px]:-ml-px min-[1440px]:w-[1202px]">
           {categoryLabels.map((label, i) => (
             <Link
               key={label}
@@ -294,8 +294,8 @@ function GrowthSection() {
       <GlowBlob color="lime" radial strength={0.6} className="top-[946px] -left-[287px] size-[672px]" />
 
       <Container className="relative flex flex-col gap-[72px] py-[120px] lg:pl-[121px] lg:pr-[61px]">
-        <div className="flex flex-col items-center gap-[63px] xl:flex-row">
-          <div className="flex w-full flex-col gap-10 xl:w-[574px] xl:shrink-0">
+        <div className="flex flex-col items-center gap-[63px] min-[1440px]:flex-row">
+          <div className="flex w-full flex-col gap-10 min-[1440px]:w-[574px] min-[1440px]:shrink-0">
             <h2 className="font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px]">
               Your Path to Professional Growth Starts Here!
             </h2>
@@ -305,7 +305,7 @@ function GrowthSection() {
               gain industry expertise, or embark on a new career path entirely, we have the
               resources you need.
             </p>
-            <div className="flex gap-14">
+            <div className="flex flex-wrap gap-x-6 gap-y-4 sm:gap-x-14">
               {[
                 ["12K", "Students"],
                 ["70+", "Courses"],
@@ -321,16 +321,16 @@ function GrowthSection() {
             </div>
           </div>
 
-          <div className="relative mx-auto h-[552px] w-full max-w-[621px] xl:w-[621px] xl:shrink-0">
-            <CourseCard course={courses[0]} variant="loose" className="absolute left-0 top-0 z-0" />
+          <div className="relative mx-auto h-[552px] w-full max-w-[621px] max-md:flex max-md:h-auto max-md:flex-col max-md:items-center max-md:gap-5 min-[1440px]:w-[621px] min-[1440px]:shrink-0">
+            <CourseCard course={courses[0]} variant="loose" className="absolute left-0 top-0 z-0 max-md:static" />
             <Image
               src={images.heroPerson}
               alt="Student celebrating progress"
               width={577}
               height={540}
-              className="absolute left-0 top-3 z-10 h-[540px] w-[577px] object-cover fig-shadow"
+              className="absolute left-0 top-3 z-10 h-[540px] w-[577px] object-cover fig-shadow max-md:static max-md:order-first max-md:h-auto max-md:w-full max-md:rounded-[16px]"
             />
-            <div className="absolute top-[213px] right-[44px] z-20 flex w-[232px] flex-col gap-2 rounded-[16px] bg-white p-4">
+            <div className="absolute top-[213px] right-[44px] z-20 flex w-[232px] flex-col gap-2 rounded-[16px] bg-white p-4 max-md:static">
               <span className="text-[14px] leading-[24px] font-medium text-neutral-950">Learning Progress</span>
               <span className="font-heading text-[48px] leading-[58px] font-semibold text-neutral-950">55%</span>
               <div className="h-2 w-full overflow-hidden rounded-full bg-[#f6f6f6]">
@@ -345,8 +345,8 @@ function GrowthSection() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-[79px] xl:w-[1200px] xl:flex-row-reverse">
-          <div className="flex w-full flex-col gap-10 xl:w-[580px] xl:shrink-0 xl:self-center">
+        <div className="flex flex-col items-center gap-[79px] min-[1440px]:w-[1200px] min-[1440px]:flex-row-reverse">
+          <div className="flex w-full flex-col gap-10 min-[1440px]:w-[580px] min-[1440px]:shrink-0 min-[1440px]:self-center">
             <h2 className="max-w-[391px] font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px]">
               Create{" "}
               <span style={{ letterSpacing: "-0.0909em" }}>&amp;</span> Manage Courses Easily.
@@ -369,9 +369,9 @@ function GrowthSection() {
             </ul>
           </div>
 
-          <div className="relative mx-auto h-[596px] w-full max-w-[541px] xl:w-[541px] xl:shrink-0">
+          <div className="relative mx-auto h-[596px] w-full max-w-[541px] max-md:flex max-md:h-auto max-md:flex-col max-md:items-center max-md:gap-5 min-[1440px]:w-[541px] min-[1440px]:shrink-0">
             <BlueStat
-              className="absolute left-0 top-11 w-[232px]"
+              className="absolute left-0 top-11 w-[232px] max-md:static"
               label="Total Revenue"
               sub="July 1-28"
               value="$120.29"
@@ -379,23 +379,23 @@ function GrowthSection() {
               progress
             />
             <BlueStat
-              className="absolute left-0 top-[194px] w-[134px]"
+              className="absolute left-0 top-[194px] w-[134px] max-md:static"
               label="Year to Date"
               sub="2023"
               value="$1,200.38"
               delta="+12$"
               stacked
             />
-            <div className="absolute left-7 top-0 z-10 h-[596px] w-[435px] overflow-hidden fig-shadow">
+            <div className="absolute left-7 top-0 z-10 h-[596px] w-[435px] overflow-hidden fig-shadow max-md:static max-md:order-first max-md:h-auto max-md:w-full max-md:rounded-[16px]">
               <Image
                 src={images.featureStack}
                 alt="Creator managing courses"
                 width={683}
                 height={683}
-                className="absolute top-0 -left-[124px] h-[683px] w-[683px] max-w-none"
+                className="absolute top-0 -left-[124px] h-[683px] w-[683px] max-w-none max-md:static max-md:h-auto max-md:w-full"
               />
             </div>
-            <div className="absolute top-[413px] left-[283px] z-20 flex w-[258px] flex-col gap-2 rounded-[16px] bg-white p-4">
+            <div className="absolute top-[413px] left-[283px] z-20 flex w-[258px] flex-col gap-2 rounded-[16px] bg-white p-4 max-md:static">
               <div className="flex flex-col">
                 <span className="text-[16px] leading-[24px] font-medium text-neutral-950">Happy Students</span>
                 <div className="flex items-center gap-2">
@@ -408,7 +408,7 @@ function GrowthSection() {
             <Ornament
               src="/images/e3b55902_387x387.png"
               color="lime"
-              className="left-[305px] top-[114px] z-30 size-[215px]"
+              className="left-[305px] top-[114px] z-30 size-[215px] max-md:hidden"
             />
           </div>
         </div>

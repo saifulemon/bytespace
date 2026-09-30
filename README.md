@@ -91,6 +91,30 @@ site re-themes.
   scroll it condenses to 80px with a frosted white background and dark text.
 - Course pages share one shell (`CourseShell`) so the banner, tabs, enrolment card and
   footer stay identical across about/lessons/reviews.
+- Below `md` the header swaps its inline nav for a hamburger that opens `#mobile-menu`
+  (nav links plus `Sign In` / `Join Us`). The menu closes on link click, `Escape`, or when
+  the viewport grows past 768px.
+
+## Responsive
+
+Figma only defines the 1440px composition, so every width below it is derived from the same
+components. Verified with **no horizontal overflow and no clipped text on all 9 routes at
+320, 360, 390, 414, 480, 640, 768, 834, 1024, 1100, 1280 and 1440px** (108 combinations).
+
+- **1440px is the contract.** All design-fixed widths (footer columns, creator hero,
+  course body + aside, growth rows) are gated with `min-[1440px]:` and fall back to
+  `w-full` below it, so the pixel diff against the Figma reference is untouched.
+- **Course pages** show the sticky enrolment card as an aside only at ≥1440px; below that
+  it renders inline underneath the content, and the body takes the full container width.
+- **Growth collages** (photo + stat cards + badge + ornament) stack vertically below `md`
+  instead of being absolutely positioned into a 541/621px box.
+- **Filter chips, category tabs, footer columns and grid card layouts wrap** rather than
+  scrolling sideways; the partner logo band grows instead of clipping.
+- **Fixed-height sections were audited** so no section's content spills into the next one.
+
+```bash
+node .opencode/qa/responsive.js '[["/","home"],["/search","search"],["/course","course"],["/course/lessons","lessons"],["/course/reviews","reviews"],["/creator","creator"],["/login","login"],["/register","register"],["/404","notfound"]]' '[320,360,390,414,480,640,768,834,1024,1100,1280,1440]'
+```
 
 ## Assets
 
@@ -114,6 +138,7 @@ holds the harness used to compare them against the build:
 npm run build && npm run start -- -p 3111
 node .opencode/qa/shoot.js '[["/","home",1440,1024,true], ...]'
 python3 .opencode/qa/score.py          # mean abs pixel diff per route
+node .opencode/qa/responsive.js '...' '[320,360,...,1440]'   # overflow / clipped-text audit
 ```
 
 Both directories are gitignored — they are working artifacts, not part of the site.
