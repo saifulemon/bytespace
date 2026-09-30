@@ -1,10 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CheckIcon, SignalIcon, StarIcon, UsersIcon } from "@/components/icons";
 import { GridBackdrop } from "@/components/decor";
 import { Footer, Header, HeaderSlot } from "@/components/site";
-import { images } from "@/data/site";
+import { courseToCartItem, useCart } from "@/components/cart";
+import { usePreview } from "@/components/preview-modal";
+import { useToast } from "@/components/feedback";
+import { courses, images } from "@/data/site";
 
 export type CourseTab = "about" | "lessons" | "reviews";
 
@@ -63,8 +68,8 @@ export function CourseShell({
       </section>
 
       <aside className="pointer-events-none absolute inset-x-0 top-[416px] hidden min-[1440px]:block">
-        <div className="pointer-events-auto mx-auto max-w-[1440px] px-[120px]">
-          <div className="ml-auto w-[412px]">
+        <div className="mx-auto max-w-[1440px] px-[120px]">
+          <div className="pointer-events-auto ml-auto w-[412px]">
             <EnrollCard />
           </div>
         </div>
@@ -76,6 +81,29 @@ export function CourseShell({
 }
 
 function CourseHero() {
+  const preview = usePreview();
+  const toast = useToast();
+
+  const share = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/course";
+    const title = "Build Digital Asset: A Comprehensive Guide";
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title, url });
+        toast("Thanks for sharing!", "success");
+        return;
+      }
+    } catch {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast("Course link copied to clipboard.", "success");
+    } catch {
+      toast(`Copy this link to share: ${url}`);
+    }
+  };
+
   return (
     <div className="relative mx-auto w-full max-w-[1440px] px-6 pt-[52px] pb-16 lg:px-[122px] lg:pb-[62px]">
       <div className="flex flex-wrap items-start justify-between gap-6 min-[1440px]:w-[1283px]">
@@ -100,6 +128,8 @@ function CourseHero() {
 
         <button
           type="button"
+          data-testid="share-course"
+          onClick={share}
           className="inline-flex h-10 items-center gap-2 rounded-[24px] bg-secondary-400 px-6 text-[16px] leading-6 font-medium text-neutral-950 transition-colors hover:bg-secondary-500"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="size-6">
@@ -123,6 +153,13 @@ function CourseHero() {
         <button
           type="button"
           aria-label="Play preview"
+          data-testid="play-preview"
+          onClick={() =>
+            preview({
+              title: "Build Digital Asset: A Comprehensive Guide",
+              subtitle: "Course preview",
+            })
+          }
           className="absolute top-1/2 left-1/2 grid size-[104px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[24px] border border-[#4f4f4f] bg-[rgba(61,61,61,0.24)] backdrop-blur-[40px] ml-[16px] mt-[16.5px] transition-transform hover:scale-105"
         >
           <svg viewBox="0 0 60 60" aria-hidden className="size-[60px]">
@@ -162,6 +199,15 @@ const includes = [
 ];
 
 export function EnrollCard() {
+  const cart = useCart();
+  const toast = useToast();
+
+  const enroll = () => {
+    cart.add(courseToCartItem(courses[1]));
+    cart.open();
+    toast("Added to your cart.", "success");
+  };
+
   return (
     <div className="rounded-[24px] border border-hairline bg-white p-[39px]">
       <div className="flex flex-col gap-6 pr-[9px]">
@@ -201,6 +247,8 @@ export function EnrollCard() {
 
         <button
           type="button"
+          data-testid="enroll-now"
+          onClick={enroll}
           className="h-[46px] w-full rounded-[24px] bg-secondary-400 text-[18px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500"
         >
           Enroll Now

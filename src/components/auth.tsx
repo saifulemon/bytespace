@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { FacebookIcon, GoogleIcon, StarIcon } from "@/components/icons";
 import { GridBackdrop, Ornament } from "@/components/decor";
 import { Logo } from "@/components/site";
@@ -99,27 +99,51 @@ export function Field({
   label,
   placeholder,
   type = "text",
+  name,
+  value,
+  onChange,
+  error,
+  autoComplete,
 }: {
   label: string;
   placeholder: string;
   type?: string;
+  name?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  error?: string;
+  autoComplete?: string;
 }) {
   return (
     <label className="flex flex-col gap-2">
       <span className="text-[14px] leading-[17px] font-medium text-neutral-950">{label}</span>
       <input
         type={type}
+        name={name}
         placeholder={placeholder}
-        className="h-[52px] w-full rounded-[12px] border border-neutral-100 bg-white px-6 text-[18px] leading-[29px] text-neutral-950 outline-none placeholder:text-neutral-400 focus:border-primary-600"
+        value={value}
+        autoComplete={autoComplete}
+        aria-invalid={error ? true : undefined}
+        onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+        className={cn(
+          "h-[52px] w-full rounded-[12px] border bg-white px-6 text-[18px] leading-[29px] text-neutral-950 outline-none placeholder:text-neutral-400 focus:border-primary-600",
+          error ? "border-primary-800" : "border-neutral-100",
+        )}
       />
+      {error ? (
+        <span role="alert" className="text-[13px] leading-[18px] text-primary-800">
+          {error}
+        </span>
+      ) : null}
     </label>
   );
 }
 
-export function AuthButton({ children }: { children: ReactNode }) {
+export function AuthButton({ children, ...props }: { children: ReactNode } & ComponentProps<"button">) {
   return (
     <button
       type="button"
+      {...props}
       className="inline-flex h-[46px] items-center justify-center gap-2 self-end rounded-[24px] bg-secondary-400 px-6 text-[18px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500"
     >
       {children}
@@ -127,19 +151,24 @@ export function AuthButton({ children }: { children: ReactNode }) {
   );
 }
 
-export function SocialRow() {
+export function SocialRow({ onSelect }: { onSelect?: (provider: "Facebook" | "Google") => void }) {
   return (
     <div className="flex items-center justify-center gap-4">
-      {[FacebookIcon, GoogleIcon].map((Icon, i) => (
-        <button
-          key={i}
-          type="button"
-          aria-label={i === 0 ? "Continue with Facebook" : "Continue with Google"}
-          className="grid size-[72px] place-items-center rounded-[24px] border border-[#d1d1d1] text-black transition-colors hover:border-neutral-950"
-        >
-          <Icon className="size-10" />
-        </button>
-      ))}
+      {[FacebookIcon, GoogleIcon].map((Icon, i) => {
+        const provider = i === 0 ? "Facebook" : "Google";
+        return (
+          <button
+            key={provider}
+            type="button"
+            data-testid={`social-${provider.toLowerCase()}`}
+            aria-label={`Continue with ${provider}`}
+            onClick={() => onSelect?.(provider)}
+            className="grid size-[72px] place-items-center rounded-[24px] border border-[#d1d1d1] text-black transition-colors hover:border-neutral-950"
+          >
+            <Icon className="size-10" />
+          </button>
+        );
+      })}
     </div>
   );
 }

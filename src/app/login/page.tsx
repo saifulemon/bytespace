@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AuthButton, AuthShell, Field, SocialRow } from "@/components/auth";
+import { SignInForm, SocialButtons } from "@/components/auth-forms";
+import { AuthShell } from "@/components/auth";
 
 export const metadata: Metadata = { title: "Sign In — ByteSpace" };
 
@@ -19,11 +20,7 @@ export default function LoginPage() {
             </h1>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <Field label="Email" placeholder="designer@example.com" type="email" />
-            <Field label="Password" placeholder="********" type="password" />
-            <AuthButton>Sign In</AuthButton>
-          </div>
+          <SignInForm />
         </div>
 
         <div className="flex flex-col gap-10">
@@ -32,7 +29,7 @@ export default function LoginPage() {
             <span className="text-[18px] leading-[29px] text-[#888888]">or</span>
             <span className="h-px flex-1 bg-[#d1d1d1]" />
           </div>
-          <SocialRow />
+          <SocialButtons />
         </div>
 
         <p className="flex justify-center gap-1 text-[16px] leading-[26px]">

@@ -113,11 +113,11 @@ export function Logoipsum({ variant = 0 }: { variant?: number }) {
   ];
 
   return (
-    <div className="flex h-[42px] w-[170px] items-center gap-3 text-neutral-400">
-      <svg viewBox="0 0 40 40" className="size-10 shrink-0" aria-hidden>
+    <div className="flex h-[28px] w-[115px] items-center gap-2 text-neutral-400 sm:h-[42px] sm:w-[170px] sm:gap-3">
+      <svg viewBox="0 0 40 40" className="size-7 shrink-0 sm:size-10" aria-hidden>
         {marks[variant % marks.length]}
       </svg>
-      <span className="text-[19px] leading-none font-bold tracking-tight text-neutral-400">
+      <span className="text-[13px] leading-none font-bold tracking-tight text-neutral-400 sm:text-[19px]">
         Logoipsum
       </span>
     </div>

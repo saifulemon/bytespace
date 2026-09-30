@@ -53,6 +53,8 @@ export type Course = {
   priceSuffix: string;
   rating: string;
   extraStudents: string;
+  categories: string[];
+  tags: string[];
 };
 
 const meta = {
@@ -67,13 +69,87 @@ const meta = {
   extraStudents: "26+",
 };
 
+export const courseCategories = [
+  "Design",
+  "Development",
+  "IT & Software",
+  "Business",
+  "Marketing",
+  "Photography",
+] as const;
+
 export const courses: Course[] = [
-  { ...meta, title: "Learn Figma from Basic", thumbnail: img("93ad9f9e_341x195") },
-  { ...meta, title: "Build Digital Asset", thumbnail: img("c8826419_341x195") },
-  { ...meta, title: "the Power of Big Data", thumbnail: img("4f3bdea5_341x195") },
-  { ...meta, title: "Balancing Productivity and Self-Care", thumbnail: img("72e18d90_341x195") },
-  { ...meta, title: "Mastering Money Management", thumbnail: img("a8978945_341x195") },
-  { ...meta, title: "From Idea to Startup Success", thumbnail: img("69362b02_341x195") },
+  {
+    ...meta,
+    title: "Learn Figma from Basic",
+    thumbnail: img("93ad9f9e_341x195"),
+    categories: ["Design", "Development"],
+    tags: [
+      "Featured",
+      "UI/UX Design",
+      "Drawing & Painting",
+      "Creative Marketing",
+      "Graphic Design",
+      "Photography",
+      "Digital Illustration",
+    ],
+  },
+  {
+    ...meta,
+    title: "Build Digital Asset",
+    thumbnail: img("c8826419_341x195"),
+    categories: ["Design", "Photography"],
+    tags: [
+      "Featured",
+      "UI/UX Design",
+      "Animation",
+      "Creative Marketing",
+      "Graphic Design",
+      "Digital Illustration",
+      "Film & Video",
+    ],
+  },
+  {
+    ...meta,
+    title: "the Power of Big Data",
+    thumbnail: img("4f3bdea5_341x195"),
+    categories: ["IT & Software", "Development"],
+    tags: ["Featured", "Marketing", "Social Media", "Data Science", "Web Development"],
+  },
+  {
+    ...meta,
+    title: "Balancing Productivity and Self-Care",
+    thumbnail: img("72e18d90_341x195"),
+    categories: ["Business", "Marketing"],
+    tags: ["Featured", "Cooking", "Music", "Social Media", "Productivity", "Crafts"],
+  },
+  {
+    ...meta,
+    title: "Mastering Money Management",
+    thumbnail: img("a8978945_341x195"),
+    categories: ["Business", "Marketing"],
+    tags: [
+      "Featured",
+      "Marketing",
+      "Creative Marketing",
+      "Freelance & Entrepreneurship",
+      "Photography",
+    ],
+  },
+  {
+    ...meta,
+    title: "From Idea to Startup Success",
+    thumbnail: img("69362b02_341x195"),
+    categories: ["Business", "Development"],
+    tags: [
+      "Featured",
+      "Animation",
+      "Social Media",
+      "Marketing",
+      "Freelance & Entrepreneurship",
+      "Web Development",
+    ],
+  },
 ];
 
 export const navLinks = [
@@ -82,23 +158,86 @@ export const navLinks = [
   { label: "Creators", href: "/creator" },
 ] as const;
 
+/** Category tabs shown on /search and as topic chips on the home page. */
+export const searchTabs: string[] = [
+  "Featured",
+  "Music",
+  "Drawing & Painting",
+  "Marketing",
+  "Animation",
+  "Social Media",
+  "UI/UX Design",
+  "Creative Marketing",
+  "Cooking",
+];
+
 export const footerBrowse: { label: string; href: string }[] = [
-  { label: "Featured Courses", href: "/search" },
-  { label: "Featured Categories", href: "/search" },
-  { label: "Business", href: "/search" },
-  { label: "IT", href: "/search" },
-  { label: "Design", href: "/search" },
-  { label: "Development", href: "/search" },
-  { label: "Marketing", href: "/search" },
-  { label: "Photography", href: "/search" },
-  { label: "Finance", href: "/search" },
+  { label: "Featured Courses", href: "/search?tab=Featured" },
+  { label: "Featured Categories", href: "/search?category=Design" },
+  { label: "Business", href: "/search?category=Business" },
+  { label: "IT", href: "/search?category=IT%20%26%20Software" },
+  { label: "Design", href: "/search?category=Design" },
+  { label: "Development", href: "/search?category=Development" },
+  { label: "Marketing", href: "/search?category=Marketing" },
+  { label: "Photography", href: "/search?category=Photography" },
+  { label: "Finance", href: "/search?category=Business" },
   { label: "Sport", href: "/search" },
 ];
 
 export const footerPlatform: { label: string; href: string }[] = [
   { label: "Become a Creator", href: "/creator" },
   { label: "Affiliate Program", href: "/creator" },
-  { label: "Contact", href: "/" },
-  { label: "Help", href: "/" },
-  { label: "About", href: "/" },
+  { label: "Contact", href: "" },
+  { label: "Help", href: "" },
+  { label: "About", href: "" },
 ];
+
+/** Footer/header text links that open a dialog instead of navigating. */
+export const infoPages: Record<string, { title: string; body: string[] }> = {
+  "Privacy Policy": {
+    title: "Privacy Policy",
+    body: [
+      "ByteSpace collects only the information you provide when creating an account, enrolling in a course or joining the newsletter — your name, email address and the courses you are interested in.",
+      "We use that information to run your account, deliver course content and send the updates you asked for. We never sell your personal data, and you can request a copy or a full deletion at any time from your account settings.",
+      "Questions? Write to privacy@bytespace.example and we will get back to you within a few working days.",
+    ],
+  },
+  "Terms of Service": {
+    title: "Terms of Service",
+    body: [
+      "By using ByteSpace you agree to keep your login credentials private, to use course material for personal learning only, and to respect the intellectual property of our creators.",
+      "Course access is granted per licence (for example /lifetime) and may not be resold or redistributed. Creators keep ownership of their content and grant ByteSpace the right to host and stream it.",
+      "We may update these terms from time to time; continued use of the platform after a change means you accept the new version.",
+    ],
+  },
+  "Cookies Settings": {
+    title: "Cookies Settings",
+    body: [
+      "We use strictly necessary cookies to keep you signed in and to remember your cart, plus optional analytics cookies that help us understand which courses are popular.",
+      "You can clear or block cookies in your browser at any time. Blocking necessary cookies will sign you out and empty your saved cart.",
+    ],
+  },
+  Contact: {
+    title: "Contact",
+    body: [
+      "Have a question about a course, your account or a partnership? Our team is happy to help.",
+      "Email: hello@bytespace.example — Support: support@bytespace.example — Phone: +1 (555) 012-3456 (Mon–Fri, 9:00–18:00).",
+      "We usually reply within one working day.",
+    ],
+  },
+  Help: {
+    title: "Help Center",
+    body: [
+      "Enrolling: pick a course, press Enroll Now and complete checkout — your course appears in the cart and in your account straight away.",
+      "Payments: we accept all major cards. Refunds are available within 14 days if you have watched less than 30% of the course.",
+      "Still stuck? Use the Contact link to reach a human.",
+    ],
+  },
+  About: {
+    title: "About ByteSpace",
+    body: [
+      "ByteSpace is a course marketplace where independent creators publish in-depth classes on design, business and technology.",
+      "Over 12,000 students learn here, guided by 70+ courses from creators such as PurePearl Studio. Our goal is simple: practical teaching, honest reviews and lifetime access to what you buy.",
+    ],
+  },
+};

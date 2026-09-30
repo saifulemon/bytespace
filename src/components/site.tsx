@@ -5,11 +5,16 @@ import { useEffect, useState, type ComponentProps, type ReactNode } from "react"
 import { cn } from "@/lib/cn";
 import { CartIcon, CloseIcon, LogoMark, MenuIcon } from "@/components/icons";
 import { NewsletterForm } from "@/components/forms";
-import { footerBrowse, footerPlatform, navLinks } from "@/data/site";
+import { Modal } from "@/components/ui";
+import { useCart } from "@/components/cart";
+import { footerBrowse, footerPlatform, infoPages, navLinks } from "@/data/site";
 
 export function Container({ className, ...props }: ComponentProps<"div">) {
   return (
-    <div className={cn("mx-auto w-full max-w-[1440px] px-[40px] lg:px-[120px]", className)} {...props} />
+    <div
+      className={cn("mx-auto w-full max-w-[1440px] px-4 sm:px-10 lg:px-[120px]", className)}
+      {...props}
+    />
   );
 }
 
@@ -23,14 +28,14 @@ export function Logo({
   return (
     <Link
       href="/"
-      className="relative block h-[37px] w-[171px] shrink-0"
+      className="relative block h-[26px] w-[120px] shrink-0 sm:h-[37px] sm:w-[171px]"
       aria-label="ByteSpace home"
     >
-      <LogoMark className="absolute top-0 left-0 h-[31.5px] w-[28.9px] text-secondary-400" />
+      <LogoMark className="absolute top-0 left-0 h-[21.3px] w-[19.6px] text-secondary-400 sm:h-[31.5px] sm:w-[28.9px]" />
       {wordmark ? (
         <span
           className={cn(
-            "absolute top-[7px] left-[37px] font-logo text-[24px] leading-[30px] font-bold whitespace-nowrap",
+            "absolute top-[4px] left-[26px] font-logo text-[18px] leading-[22px] font-bold whitespace-nowrap sm:top-[7px] sm:left-[37px] sm:text-[24px] sm:leading-[30px]",
             dark ? "text-neutral-950" : "text-neutral-50",
           )}
         >
@@ -47,12 +52,13 @@ export function Logo({
  * rendered at page root instead (see <Header />).
  */
 export function HeaderSlot() {
-  return <div aria-hidden="true" className="h-[120px] w-full" />;
+  return <div aria-hidden="true" className="h-[76px] w-full sm:h-[120px]" />;
 }
 
 export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const cart = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -81,9 +87,12 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
   const stuck = scrolled || menuOpen;
   const dark = tone === "dark" || stuck;
   const fg = dark ? "text-neutral-950" : "text-neutral-50";
-  const navLink = cn("text-[16px] transition-[color,opacity] duration-300 hover:opacity-70", fg);
+  const navLink = cn(
+    "relative text-[16px] transition-[color,opacity] duration-300 hover:opacity-70 after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']",
+    fg,
+  );
   const actionLink = cn(
-    "text-[16px] leading-6 transition-[color,opacity] duration-300 hover:opacity-70",
+    "relative text-[16px] leading-6 transition-[color,opacity] duration-300 hover:opacity-70 after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']",
     fg,
   );
 
@@ -93,8 +102,8 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
         "fixed inset-x-0 top-0 z-50 w-full motion-reduce:transition-none",
         "transition-[height,background-color,box-shadow] duration-300 ease-out",
         stuck
-          ? "h-[80px] bg-white/85 shadow-[0_1px_0_0_#e5e6e8,0_18px_44px_-30px_rgba(16,24,40,0.5)] backdrop-blur-xl"
-          : "h-[120px] bg-transparent shadow-none backdrop-blur-none",
+          ? "h-[64px] bg-white shadow-[0_1px_0_0_#e5e6e8,0_18px_44px_-30px_rgba(16,24,40,0.5)] sm:h-[80px]"
+          : "h-[76px] bg-transparent shadow-none sm:h-[120px]",
       )}
     >
       <Container className="flex h-full items-center justify-between">
@@ -126,12 +135,18 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
           <Link href="/register" className={cn(actionLink, "hidden sm:inline")}>
             Join Us
           </Link>
-          <button type="button" aria-label="Cart" className="grid size-6 place-items-center">
+          <button
+            type="button"
+            aria-label="Cart"
+            data-testid="header-cart"
+            onClick={cart.open}
+            className="relative grid size-6 place-items-center after:absolute after:-inset-[10px] after:content-['']"
+          >
             <CartIcon className="size-6" />
           </button>
           <button
             type="button"
-            className="-mr-2 grid size-10 place-items-center md:hidden"
+            className="relative -mr-2 grid size-10 place-items-center after:absolute after:-inset-[2px] after:content-[''] md:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -182,11 +197,14 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
 }
 
 export function Footer() {
+  const [info, setInfo] = useState<string | null>(null);
+  const page = info ? infoPages[info] : null;
+
   return (
     <footer className="w-full border-t border-hairline bg-white">
-      <Container className="flex flex-col gap-[130px] pt-[70px] pb-[48px]">
-        <div className="flex flex-col gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]">
-          <div className="flex w-full shrink-0 flex-col gap-[45px] min-[1440px]:w-[528px]">
+      <Container className="flex flex-col gap-14 pt-12 pb-10 md:gap-24 md:pt-[70px] md:pb-[48px]">
+        <div className="flex flex-col gap-10 md:gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]">
+          <div className="flex w-full shrink-0 flex-col gap-8 md:gap-[45px] min-[1440px]:w-[528px]">
             <div className="flex flex-col gap-4">
               <div className="h-[37px]">
                 <Logo dark />
@@ -199,8 +217,8 @@ export function Footer() {
             <NewsletterForm />
           </div>
 
-          <div className="flex flex-1 flex-wrap gap-10 min-[1440px]:flex-nowrap min-[1440px]:items-start min-[1440px]:justify-between">
-            <div className="flex w-[167px] shrink-0 flex-col gap-6">
+          <div className="flex flex-1 flex-wrap gap-x-6 gap-y-8 md:gap-x-10 md:gap-y-10 min-[1440px]:flex-nowrap min-[1440px]:items-start min-[1440px]:justify-between">
+            <div className="flex w-[calc(50%_-_12px)] shrink-0 flex-col gap-6 sm:w-[calc(50%_-_20px)] md:w-[167px]">
               <span className="text-[16px] leading-6 text-neutral-950">Browse</span>
               <ul className="flex flex-col gap-4">
                 {footerBrowse.slice(0, 5).map((l) => (
@@ -209,18 +227,31 @@ export function Footer() {
               </ul>
             </div>
 
-            <ul className="flex w-[167px] shrink-0 flex-col gap-4 min-[1440px]:pt-[48px]">
+            <ul className="flex w-[calc(50%_-_12px)] shrink-0 flex-col gap-4 sm:w-[calc(50%_-_20px)] md:w-[167px] min-[1440px]:pt-[48px]">
               {footerBrowse.slice(5).map((l) => (
                 <FooterLink key={l.label} {...l} />
               ))}
             </ul>
 
-            <div className="flex w-[166px] shrink-0 flex-col gap-6">
+            <div className="flex w-[calc(50%_-_12px)] shrink-0 flex-col gap-6 sm:w-[calc(50%_-_20px)] md:w-[166px]">
               <span className="text-[16px] leading-6 text-neutral-950">Platform</span>
               <ul className="flex flex-col gap-4">
-                {footerPlatform.map((l) => (
-                  <FooterLink key={l.label} {...l} />
-                ))}
+                {footerPlatform.map((l) =>
+                  infoPages[l.label] ? (
+                    <li key={l.label} className="text-[14px] leading-[22px]">
+                      <button
+                        type="button"
+                        data-testid={`footer-${l.label.toLowerCase()}`}
+                        onClick={() => setInfo(l.label)}
+                        className="inline-block py-1 leading-[22px] text-neutral-950 hover:text-primary-600"
+                      >
+                        {l.label}
+                      </button>
+                    </li>
+                  ) : (
+                    <FooterLink key={l.label} {...l} />
+                  ),
+                )}
               </ul>
             </div>
           </div>
@@ -234,14 +265,44 @@ export function Footer() {
             </p>
             <div className="flex flex-wrap gap-6">
               {["Privacy Policy", "Terms of Service", "Cookies Settings"].map((l) => (
-                <span key={l} className="text-[12px] leading-[19px] text-neutral-950">
+                <button
+                  key={l}
+                  type="button"
+                  data-testid={`footer-${l.toLowerCase().replace(/\s+/g, "-")}`}
+                  onClick={() => setInfo(l)}
+                  className="inline-block py-1 text-left text-[12px] leading-[19px] text-neutral-950 hover:text-primary-600"
+                >
                   {l}
-                </span>
+                </button>
               ))}
             </div>
           </div>
         </div>
       </Container>
+
+      <Modal
+        open={page !== null}
+        onClose={() => setInfo(null)}
+        title={page?.title ?? ""}
+        testId="footer-info-modal"
+        footer={
+          <button
+            type="button"
+            onClick={() => setInfo(null)}
+            className="inline-flex h-[42px] items-center justify-center rounded-[24px] bg-secondary-400 px-5 text-[16px] leading-[26px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500"
+          >
+            Got it
+          </button>
+        }
+      >
+        <div className="flex flex-col gap-4">
+          {page?.body.map((paragraph) => (
+            <p key={paragraph} className="text-[15px] leading-[26px] text-neutral-700">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </Modal>
     </footer>
   );
 }
@@ -249,7 +310,10 @@ export function Footer() {
 function FooterLink({ label, href }: { label: string; href: string }) {
   return (
     <li className="text-[14px] leading-[22px]">
-      <Link href={href} className="leading-[22px] text-neutral-950 hover:text-primary-600">
+      <Link
+        href={href}
+        className="inline-block py-1 leading-[22px] text-neutral-950 hover:text-primary-600"
+      >
         {label}
       </Link>
     </li>
@@ -303,15 +367,17 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <span className="inline-flex h-[43px] items-center rounded-full bg-neutral-50 px-4 text-[16px] leading-[19px] font-medium text-neutral-700">
+        <span className="inline-flex h-[34px] items-center rounded-full bg-neutral-50 px-4 text-[14px] leading-[19px] font-medium text-neutral-700 sm:h-[43px] sm:text-[16px]">
           {eyebrow}
         </span>
       ) : null}
-      <h2 className="max-w-[588px] font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px]">
+      <h2 className="max-w-[588px] font-heading text-[27px] leading-[33px] font-semibold tracking-[-0.01em] text-neutral-950 sm:text-[36px] sm:leading-[43px] md:text-[44px] md:leading-[53px]">
         {title}
       </h2>
       {description ? (
-        <p className="max-w-[917px] text-[18px] leading-[29px] text-body">{description}</p>
+        <p className="max-w-[917px] text-[13px] leading-[20px] text-body sm:text-[18px] sm:leading-[29px]">
+          {description}
+        </p>
       ) : null}
     </div>
   );
