@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AuthButton, AuthShell, Field } from "@/components/auth";
+import { SignUpForm } from "@/components/auth-forms";
+import { AuthShell } from "@/components/auth";
 
 export const metadata: Metadata = { title: "Create an Account — ByteSpace" };
 
@@ -20,12 +21,7 @@ export default function RegisterPage() {
             </h1>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <Field label="Full Name" placeholder="Jamie Davis" />
-            <Field label="Email" placeholder="designer@example.com" type="email" />
-            <Field label="Password" placeholder="********" type="password" />
-            <AuthButton>Continue</AuthButton>
-          </div>
+          <SignUpForm />
         </div>
 
         <p className="flex justify-center gap-1 text-[16px] leading-[26px]">

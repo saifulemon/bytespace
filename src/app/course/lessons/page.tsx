@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CourseShell } from "@/components/course";
-import { PlayIcon } from "@/components/icons";
+import { LessonPlayButton } from "@/components/lesson-play";
 
 export const metadata: Metadata = { title: "Lessons — ByteSpace" };
 
@@ -54,9 +54,7 @@ export default function LessonsPage() {
           <div className="flex flex-col gap-6">
             {modules.map((module) => (
               <div key={module.title} className="flex items-start gap-[13px]">
-                <span className="grid size-[72px] shrink-0 place-items-center rounded-[24px] bg-secondary-400 text-white">
-                  <PlayIcon className="ml-1 size-10" />
-                </span>
+                <LessonPlayButton title={module.title} />
                 <div className="flex flex-col gap-1">
                   <p className="text-[16px] leading-[19px] font-medium text-neutral-950">{module.title}</p>
                   <p className="max-w-[638px] text-[16px] leading-[26px] text-neutral-700">{module.body}</p>

@@ -4,14 +4,9 @@ import { CategoryIcon, CheckIcon, StarIcon } from "@/components/icons";
 import { Container, Footer, Header, HeaderSlot, SectionHeading } from "@/components/site";
 import { HeroSearchBar } from "@/components/forms";
 import { GlowBlob, GridBackdrop, Logoipsum, Ornament } from "@/components/decor";
+import { TopicChips } from "@/components/topic-chips";
 import { CourseCard } from "@/components/CourseCard";
 import { avatars, courses, images } from "@/data/site";
-
-const tabRows = [
-  ["Featured", "Music", "Drawing & Painting", "Marketing", "Animation", "Social Media", "UI/UX Design", "Creative Marketing"],
-  ["Digital Illustration", "Film & Video", "Crafts", "Freelance & Entrepreneurship", "Graphic Design", "Photography"],
-  ["Productivity", "Web Development", "Data Science", "Cooking", "+ More"],
-];
 
 const categories = [
   "development",
@@ -71,8 +66,7 @@ function Hero() {
 
         <div
           aria-hidden
-          className="absolute rounded-full border-[320px] border-secondary-500"
-          style={{ left: 145, top: 582, width: 1149, height: 1149 }}
+          className="absolute top-[504px] left-1/2 h-[1149px] w-[1149px] -translate-x-1/2 rounded-full border-[320px] border-secondary-500 sm:top-[582px] sm:left-[145px] sm:translate-x-0"
         />
 
         <div className="hidden lg:block">
@@ -86,12 +80,12 @@ function Hero() {
 
         <HeaderSlot />
 
-        <div className="absolute inset-x-0 top-[169px] flex flex-col items-center gap-[60px] px-6 text-center">
-          <div className="flex max-w-[935px] flex-col items-center gap-8">
-            <h1 className="font-heading text-[40px] leading-[46px] font-semibold tracking-[-0.01em] text-white md:text-[56px] md:leading-[64px] lg:text-[72px] lg:leading-[86px]">
+        <div className="absolute inset-x-0 top-[80px] flex flex-col items-center gap-[26px] px-4 text-center sm:top-[169px] sm:gap-[60px] sm:px-6">
+          <div className="flex max-w-[935px] flex-col items-center gap-6 sm:gap-8">
+            <h1 className="font-heading text-[28px] leading-[31px] font-semibold tracking-[-0.01em] text-white sm:text-[40px] sm:leading-[46px] md:text-[56px] md:leading-[64px] lg:text-[72px] lg:leading-[86px]">
               Get Access to Hundreds Courses Available
             </h1>
-            <p className="max-w-[819px] text-[16px] leading-[26px] text-neutral-100 lg:text-[18px] lg:leading-[29px]">
+            <p className="max-w-[819px] text-[16px] leading-[24px] text-neutral-100 sm:leading-[26px] lg:text-[18px] lg:leading-[29px]">
               Unlock your creativity, gain valuable knowledge, and grow your business with our wide
               range of courses.
             </p>
@@ -106,7 +100,7 @@ function Hero() {
           width={578}
           height={541}
           priority
-          className="absolute top-[512px] left-1/2 hidden h-[541px] w-[578px] -translate-x-1/2 object-cover fig-shadow md:block"
+          className="absolute top-[500px] left-1/2 h-[541px] w-[578px] -translate-x-1/2 object-cover fig-shadow sm:top-[512px]"
         />
 
         <FloatingCards />
@@ -204,7 +198,7 @@ function Partners() {
   return (
     <section className="w-full bg-neutral-50">
       <Container className="flex min-h-[202px] items-center justify-center py-6">
-        <div className="flex flex-wrap items-center justify-center gap-x-[72px] gap-y-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-[72px] gap-y-[18px] sm:gap-y-6">
           {Array.from({ length: 5 }).map((_, i) => (
             <Logoipsum key={i} variant={i} />
           ))}
@@ -217,30 +211,19 @@ function Partners() {
 function CourseShowcase() {
   return (
     <section className="w-full bg-white">
-      <Container className="flex flex-col items-center pt-[72px]">
+      <Container className="flex flex-col items-center pt-[28px] sm:pt-[72px]">
         <SectionHeading
           title="Discover Your Passion, Build Your Skills"
           description="At Bytespace Courses, we bring you closer to life-changing knowledge. Explore a variety of courses across different fields, from technology to the arts, and make a difference in your career and life."
         />
 
-        <div className="mt-[42px] flex w-full flex-col items-center gap-[21px]">
-          {tabRows.map((row, i) => (
-            <div key={i} className="flex flex-wrap justify-center gap-4">
-              {row.map((label, j) => (
-                <button
-                  key={label}
-                  type="button"
-                  className={`rounded-[24px] px-4 py-3 text-[16px] leading-[19px] font-medium transition-colors ${
-                    i === 0 && j === 0
-                      ? "bg-secondary-400 text-neutral-950"
-                      : "bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          ))}
+        <div className="mt-[20px] w-full sm:mt-[42px]">
+          <div className="hidden w-full flex-col items-center gap-[21px] min-[1440px]:flex">
+            <TopicChips variant="rows" />
+          </div>
+          <div className="flex w-full flex-wrap items-center justify-center gap-[7px] min-[1440px]:hidden">
+            <TopicChips variant="flat" />
+          </div>
         </div>
 
         <div className="mt-[77px] grid w-full grid-cols-1 justify-items-center gap-10 sm:grid-cols-2 xl:grid-cols-3 lg:pr-px">
@@ -267,8 +250,9 @@ function CategoriesSection() {
           {categoryLabels.map((label, i) => (
             <Link
               key={label}
-              href="/search"
-              className="flex h-[167px] w-[167px] flex-col items-center justify-center gap-3 rounded-[24px] border border-hairline bg-neutral-50 transition-colors hover:border-primary-600"
+              href={`/search?category=${encodeURIComponent(label)}`}
+              data-testid={`category-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              className="flex aspect-square w-[min(167px,100%)] flex-col items-center justify-center gap-3 rounded-[24px] border border-hairline bg-neutral-50 transition-colors hover:border-primary-600"
             >
               <span className="grid size-[60px] place-items-center rounded-full bg-secondary-400 text-neutral-950">
                 <CategoryIcon name={categories[i]} className="size-9" />
