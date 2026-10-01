@@ -6,6 +6,7 @@ import { HeroSearchBar } from "@/components/forms";
 import { GlowBlob, GridBackdrop, Logoipsum, Ornament } from "@/components/decor";
 import { TopicChips } from "@/components/topic-chips";
 import { CourseCard } from "@/components/CourseCard";
+import { TestimonialsCarousel } from "@/components/testimonials";
 import { avatars, courses, images } from "@/data/site";
 
 const categories = [
@@ -61,7 +62,7 @@ export default function HomePage() {
 function Hero() {
   return (
     <section className="relative isolate w-full overflow-hidden bg-primary-800">
-      <div className="relative mx-auto h-[1024px] w-full max-w-[1440px]">
+      <div className="relative mx-auto h-[834px] w-full max-w-[1440px] sm:h-[1024px]">
         <GridBackdrop />
 
         <div
@@ -78,14 +79,23 @@ function Hero() {
           <Ornament src="/images/cda676fe_332x332.png" style={{ right: -17, top: 672, width: 330, height: 330 }} />
         </div>
 
+        <div className="sm:hidden">
+          <Ornament src="/images/cda676fe_332x332.png" style={{ left: -8, top: 616, width: 84, height: 84 }} />
+          <Ornament src="/images/e3b55902_387x387.png" color="lime" style={{ left: -30, top: 626, width: 82, height: 82 }} />
+          <Ornament src="/images/8670b841_344x344.png" style={{ left: 26, top: 740, width: 78, height: 78 }} />
+          <Ornament src="/images/5b3686bc_189x189.png" color="lime" style={{ right: -26, top: 578, width: 90, height: 90 }} />
+          <Ornament src="/images/e3b55902_387x387.png" style={{ right: 0, top: 638, width: 72, height: 72 }} />
+          <Ornament src="/images/f9c0e0fd_189x189.png" style={{ right: 14, top: 746, width: 72, height: 72 }} />
+        </div>
+
         <HeaderSlot />
 
-        <div className="absolute inset-x-0 top-[80px] flex flex-col items-center gap-[26px] px-4 text-center sm:top-[169px] sm:gap-[60px] sm:px-6">
+        <div className="absolute inset-x-0 top-[80px] flex flex-col items-center gap-[38px] px-4 text-center sm:top-[169px] sm:gap-[60px] sm:px-6">
           <div className="flex max-w-[935px] flex-col items-center gap-6 sm:gap-8">
-            <h1 className="font-heading text-[28px] leading-[31px] font-semibold tracking-[-0.01em] text-white sm:text-[40px] sm:leading-[46px] md:text-[56px] md:leading-[64px] lg:text-[72px] lg:leading-[86px]">
+            <h1 className="font-heading text-[32px] leading-[36.8px] font-semibold tracking-[-0.01em] text-white sm:max-w-none sm:text-[40px] sm:leading-[46px] md:text-[56px] md:leading-[64px] lg:text-[72px] lg:leading-[86px]">
               Get Access to Hundreds Courses Available
             </h1>
-            <p className="max-w-[819px] text-[16px] leading-[24px] text-neutral-100 sm:leading-[26px] lg:text-[18px] lg:leading-[29px]">
+            <p className="max-w-[819px] text-[16px] leading-[25.6px] text-neutral-100 sm:leading-[26px] lg:text-[18px] lg:leading-[29px]">
               Unlock your creativity, gain valuable knowledge, and grow your business with our wide
               range of courses.
             </p>
@@ -100,12 +110,12 @@ function Hero() {
           width={578}
           height={541}
           priority
-          className="absolute top-[500px] left-1/2 h-[541px] w-[578px] -translate-x-1/2 object-cover fig-shadow sm:top-[512px]"
+          className="absolute top-[500px] left-1/2 h-[334px] w-[357px] -translate-x-1/2 object-cover fig-shadow sm:top-[512px] sm:h-[541px] sm:w-[578px]"
         />
 
         <FloatingCards />
 
-        <div className="pointer-events-none absolute inset-x-0 top-[640px] hidden justify-center gap-6 px-6 max-[1099px]:flex">
+        <div className="pointer-events-none absolute inset-x-0 top-[640px] hidden justify-center gap-6 px-6 min-[640px]:max-[1099px]:flex">
           <StatCard />
         </div>
       </div>
@@ -197,8 +207,8 @@ function AvatarRow({ count = 7, overflow = "2K+" }: { count?: number; overflow?:
 function Partners() {
   return (
     <section className="w-full bg-neutral-50">
-      <Container className="flex min-h-[202px] items-center justify-center py-6">
-        <div className="flex flex-wrap items-center justify-center gap-x-[72px] gap-y-[18px] sm:gap-y-6">
+      <Container className="flex min-h-[216px] items-center justify-center py-6 sm:min-h-[202px]">
+        <div className="flex flex-wrap items-center justify-center gap-x-[50px] gap-y-[10px] sm:gap-x-[72px] sm:gap-y-6">
           {Array.from({ length: 5 }).map((_, i) => (
             <Logoipsum key={i} variant={i} />
           ))}
@@ -211,22 +221,35 @@ function Partners() {
 function CourseShowcase() {
   return (
     <section className="w-full bg-white">
-      <Container className="flex flex-col items-center pt-[28px] sm:pt-[72px]">
+      <Container className="flex flex-col items-center pt-[30px] sm:pt-[72px]">
         <SectionHeading
           title="Discover Your Passion, Build Your Skills"
-          description="At Bytespace Courses, we bring you closer to life-changing knowledge. Explore a variety of courses across different fields, from technology to the arts, and make a difference in your career and life."
+          description={
+            <>
+              <span className="max-sm:hidden">
+                At Bytespace Courses, we bring you closer to life-changing knowledge. Explore a
+                variety of courses across different fields, from technology to the arts, and make a
+                difference in your career and life.
+              </span>
+              <span className="sm:hidden">
+                At Bytespace Courses, we bring you closer to life-changing learning. Explore a
+                variety of courses across different fields, from technology to the arts, and make a
+                difference in your career and life.
+              </span>
+            </>
+          }
         />
 
         <div className="mt-[20px] w-full sm:mt-[42px]">
           <div className="hidden w-full flex-col items-center gap-[21px] min-[1440px]:flex">
             <TopicChips variant="rows" />
           </div>
-          <div className="flex w-full flex-wrap items-center justify-center gap-[7px] min-[1440px]:hidden">
+          <div className="flex w-full flex-wrap items-center justify-center gap-[8px] min-[1440px]:hidden">
             <TopicChips variant="flat" />
           </div>
         </div>
 
-        <div className="mt-[77px] grid w-full grid-cols-1 justify-items-center gap-10 sm:grid-cols-2 xl:grid-cols-3 lg:pr-px">
+        <div className="mt-[26px] grid w-full grid-cols-1 justify-items-center gap-4 sm:mt-[77px] sm:gap-10 sm:grid-cols-2 xl:grid-cols-3 lg:pr-px">
           {courses.map((course) => (
             <CourseCard key={course.title} course={course} />
           ))}
@@ -239,25 +262,39 @@ function CourseShowcase() {
 function CategoriesSection() {
   return (
     <section className="w-full bg-white">
-      <Container className="flex flex-col items-center pt-[72px] pb-[120px]">
+      <Container className="flex flex-col items-center pt-[30px] pb-[30px] sm:pt-[72px] sm:pb-[120px]">
         <SectionHeading
           title="Explore Diverse Learning Paths at Bytespace"
-          description="At Bytespace, we believe in empowering individuals through knowledge. Our diverse range of courses spans various fields, ensuring there's something for everyone. Unleash your potential and explore our carefully curated categories."
-          className="[&>h2]:max-w-[820px] [&>h2]:text-[36px] [&>h2]:leading-[43px]"
+          description={
+            <>
+              <span className="max-sm:hidden">
+                At Bytespace, we believe in empowering individuals through knowledge. Our diverse
+                range of courses spans various fields, ensuring there&apos;s something for everyone.
+                Unleash your potential and explore our carefully curated categories.
+              </span>
+              <span className="sm:hidden">
+                At Bytespace, we believe learning should open doors to endless possibilities. Our
+                learning paths are carefully crafted to help you achieve mastery in various fields,
+                ensuring there&apos;s something for everyone. Unleash your potential and explore our
+                carefully curated categories.
+              </span>
+            </>
+          }
+          className="[&>h2]:max-w-[820px] max-sm:[&>h2]:text-[24px] max-sm:[&>h2]:leading-[30px] sm:[&>h2]:text-[36px] sm:[&>h2]:leading-[43px]"
         />
 
-        <div className="mt-[68px] grid w-full grid-cols-2 justify-items-center gap-10 md:grid-cols-3 xl:grid-cols-6 min-[1440px]:-ml-px min-[1440px]:w-[1202px]">
+        <div className="mt-[26px] grid w-full grid-cols-2 justify-items-center gap-x-6 gap-y-4 sm:mt-[68px] sm:gap-10 md:grid-cols-3 xl:grid-cols-6 min-[1440px]:-ml-px min-[1440px]:w-[1202px]">
           {categoryLabels.map((label, i) => (
             <Link
               key={label}
               href={`/search?category=${encodeURIComponent(label)}`}
               data-testid={`category-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-              className="flex aspect-square w-[min(167px,100%)] flex-col items-center justify-center gap-3 rounded-[24px] border border-hairline bg-neutral-50 transition-colors hover:border-primary-600"
+              className="flex w-[min(167px,100%)] flex-col items-center justify-center gap-2 rounded-[24px] border border-hairline bg-neutral-50 py-4 transition-colors hover:border-primary-600 sm:aspect-square sm:gap-3 sm:py-0"
             >
-              <span className="grid size-[60px] place-items-center rounded-full bg-secondary-400 text-neutral-950">
-                <CategoryIcon name={categories[i]} className="size-9" />
+              <span className="grid size-[60px] place-items-center rounded-full bg-secondary-400 text-neutral-950 max-sm:size-[54px]">
+                <CategoryIcon name={categories[i]} className="size-9 max-sm:size-8" />
               </span>
-              <span className="text-center text-[20px] leading-[24px] font-medium text-neutral-950">
+              <span className="text-center text-[15px] leading-[18px] font-medium text-neutral-950 sm:text-[20px] sm:leading-[24px]">
                 {label}
               </span>
             </Link>
@@ -271,50 +308,50 @@ function CategoriesSection() {
 function GrowthSection() {
   return (
     <section className="relative isolate w-full overflow-hidden bg-[#fafafa]">
-      <GlowBlob color="lime" radial strength={0.4} className="-top-[466px] -left-[152px] size-[1137px]" />
-      <GlowBlob color="blue" radial strength={0.16} className="top-[183px] -left-[508px] size-[1137px]" />
-      <GlowBlob color="blue" radial strength={0.08} className="-top-[458px] left-[811px] size-[1137px]" />
-      <GlowBlob color="blue" radial strength={0.24} className="top-[788px] left-[722px] size-[1137px]" />
-      <GlowBlob color="lime" radial strength={0.6} className="top-[946px] -left-[287px] size-[672px]" />
+      <GlowBlob color="lime" radial strength={0.4} className="max-sm:-top-[171px] max-sm:-left-[167px] max-sm:size-[560px] sm:-top-[466px] sm:-left-[152px] sm:size-[1137px]" />
+      <GlowBlob color="blue" radial strength={0.16} className="max-sm:top-[521px] max-sm:-left-[264px] max-sm:size-[560px] sm:top-[183px] sm:-left-[508px] sm:size-[1137px]" />
+      <GlowBlob color="blue" radial strength={0.08} className="max-sm:-top-[162px] max-sm:left-[94px] max-sm:size-[560px] sm:-top-[458px] sm:left-[811px] sm:size-[1137px]" />
+      <GlowBlob color="blue" radial strength={0.24} className="max-sm:top-[1166px] max-sm:left-[70px] max-sm:size-[560px] sm:top-[788px] sm:left-[722px] sm:size-[1137px]" />
+      <GlowBlob color="lime" radial strength={0.6} className="max-sm:top-[1196px] max-sm:-left-[157px] max-sm:size-[340px] sm:top-[946px] sm:-left-[287px] sm:size-[672px]" />
 
-      <Container className="relative flex flex-col gap-[72px] py-[120px] lg:pl-[121px] lg:pr-[61px]">
-        <div className="flex flex-col items-center gap-[63px] min-[1440px]:flex-row">
-          <div className="flex w-full flex-col gap-10 min-[1440px]:w-[574px] min-[1440px]:shrink-0">
-            <h2 className="font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px]">
+      <Container className="relative flex flex-col gap-[94px] pt-[32px] pb-[74px] sm:gap-[72px] sm:py-[120px] lg:pl-[121px] lg:pr-[61px]">
+        <div className="flex flex-col items-start gap-6 sm:items-center sm:gap-[63px] min-[1440px]:flex-row">
+          <div className="flex w-full flex-col gap-6 sm:gap-10 min-[1440px]:w-[574px] min-[1440px]:shrink-0">
+            <h2 className="font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px] max-sm:text-[26px] max-sm:leading-[32px] max-sm:tracking-[-0.44px]">
               Your Path to Professional Growth Starts Here!
             </h2>
-            <p className="max-w-[477px] text-[18px] leading-[29px] text-neutral-700">
+            <p className="max-w-[477px] text-[16px] leading-[26px] text-neutral-700 sm:text-[18px] sm:leading-[29px]">
               Explore our curated selection of courses tailored to enhance your capabilities and
               accelerate your career journey. Whether you are looking to sharpen specific skills,
               gain industry expertise, or embark on a new career path entirely, we have the
               resources you need.
             </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-4 sm:gap-x-14">
+            <div className="flex flex-wrap gap-x-[34px] gap-y-4 sm:gap-x-14">
               {[
                 ["12K", "Students"],
                 ["70+", "Courses"],
                 ["16", "Creators"],
               ].map(([value, label]) => (
                 <div key={label} className="flex flex-col">
-                  <span className="font-heading text-[36px] leading-[44px] font-medium tracking-[-0.01em] text-primary-800">
+                  <span className="font-heading text-[36px] leading-[44px] font-medium tracking-[-0.01em] text-primary-800 max-sm:text-[30px] max-sm:leading-[38px]">
                     {value}
                   </span>
-                  <span className="text-[18px] leading-[29px] text-neutral-700">{label}</span>
+                  <span className="text-[16px] leading-[24px] text-neutral-700 sm:text-[18px] sm:leading-[29px] max-sm:leading-[26px]">{label}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative mx-auto h-[552px] w-full max-w-[621px] max-md:flex max-md:h-auto max-md:flex-col max-md:items-center max-md:gap-5 min-[1440px]:w-[621px] min-[1440px]:shrink-0">
-            <CourseCard course={courses[0]} variant="loose" className="absolute left-0 top-0 z-0 max-md:static" />
+          <div className="relative mx-auto h-[552px] w-full max-w-[621px] max-md:mx-0 max-md:w-[621px] max-md:max-w-none max-md:[zoom:0.51] min-[1440px]:w-[621px] min-[1440px]:shrink-0">
+            <CourseCard course={courses[0]} variant="loose" className="pointer-events-none absolute left-0 top-0 z-0" />
             <Image
               src={images.heroPerson}
               alt="Student celebrating progress"
               width={577}
               height={540}
-              className="absolute left-0 top-3 z-10 h-[540px] w-[577px] object-cover fig-shadow max-md:static max-md:order-first max-md:h-auto max-md:w-full max-md:rounded-[16px]"
+              className="absolute left-0 top-3 z-10 h-[540px] w-[577px] object-cover fig-shadow"
             />
-            <div className="absolute top-[213px] right-[44px] z-20 flex w-[232px] flex-col gap-2 rounded-[16px] bg-white p-4 max-md:static">
+            <div className="absolute top-[213px] right-[44px] z-20 flex w-[232px] flex-col gap-2 rounded-[16px] bg-white p-4">
               <span className="text-[14px] leading-[24px] font-medium text-neutral-950">Learning Progress</span>
               <span className="font-heading text-[48px] leading-[58px] font-semibold text-neutral-950">55%</span>
               <div className="h-2 w-full overflow-hidden rounded-full bg-[#f6f6f6]">
@@ -329,13 +366,13 @@ function GrowthSection() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-[79px] min-[1440px]:w-[1200px] min-[1440px]:flex-row-reverse">
-          <div className="flex w-full flex-col gap-10 min-[1440px]:w-[580px] min-[1440px]:shrink-0 min-[1440px]:self-center">
-            <h2 className="max-w-[391px] font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px]">
+        <div className="flex flex-col items-start gap-6 sm:items-center sm:gap-[79px] min-[1440px]:w-[1200px] min-[1440px]:flex-row-reverse">
+          <div className="flex w-full flex-col gap-6 sm:gap-10 min-[1440px]:w-[580px] min-[1440px]:shrink-0 min-[1440px]:self-center">
+            <h2 className="max-w-[391px] font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-neutral-950 md:text-[44px] md:leading-[53px] max-sm:text-[26px] max-sm:leading-[32px] max-sm:tracking-[-0.44px]">
               Create{" "}
               <span style={{ letterSpacing: "-0.0909em" }}>&amp;</span> Manage Courses Easily.
             </h2>
-            <p className="max-w-[574px] text-[18px] leading-[29px] text-neutral-700">
+            <p className="max-w-[574px] text-[16px] leading-[25px] text-neutral-700 sm:text-[18px] sm:leading-[29px]">
               ByteSpace supports individuals or entities in the creation, publication, and
               administration of educational courses.
             </p>
@@ -346,16 +383,16 @@ function GrowthSection() {
                     <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary-600 text-white">
                       <CheckIcon className="size-4" />
                     </span>
-                    <span className="text-[18px] leading-[22px] font-medium text-neutral-950">{item}</span>
+                    <span className="text-[16px] leading-[24px] font-medium text-neutral-950 sm:text-[18px] sm:leading-[22px]">{item}</span>
                   </li>
                 ),
               )}
             </ul>
           </div>
 
-          <div className="relative mx-auto h-[596px] w-full max-w-[541px] max-md:flex max-md:h-auto max-md:flex-col max-md:items-center max-md:gap-5 min-[1440px]:w-[541px] min-[1440px]:shrink-0">
+          <div className="relative mx-auto h-[596px] w-full max-w-[541px] max-md:mx-0 max-md:w-[541px] max-md:max-w-none max-md:[zoom:0.61] min-[1440px]:w-[541px] min-[1440px]:shrink-0">
             <BlueStat
-              className="absolute left-0 top-11 w-[232px] max-md:static"
+              className="absolute left-0 top-11 w-[232px]"
               label="Total Revenue"
               sub="July 1-28"
               value="$120.29"
@@ -363,23 +400,23 @@ function GrowthSection() {
               progress
             />
             <BlueStat
-              className="absolute left-0 top-[194px] w-[134px] max-md:static"
+              className="absolute left-0 top-[194px] w-[134px]"
               label="Year to Date"
               sub="2023"
               value="$1,200.38"
               delta="+12$"
               stacked
             />
-            <div className="absolute left-7 top-0 z-10 h-[596px] w-[435px] overflow-hidden fig-shadow max-md:static max-md:order-first max-md:h-auto max-md:w-full max-md:rounded-[16px]">
+            <div className="absolute left-7 top-0 z-10 h-[596px] w-[435px] overflow-hidden fig-shadow">
               <Image
                 src={images.featureStack}
                 alt="Creator managing courses"
                 width={683}
                 height={683}
-                className="absolute top-0 -left-[124px] h-[683px] w-[683px] max-w-none max-md:static max-md:h-auto max-md:w-full"
+                className="absolute top-0 -left-[124px] h-[683px] w-[683px] max-w-none"
               />
             </div>
-            <div className="absolute top-[413px] left-[283px] z-20 flex w-[258px] flex-col gap-2 rounded-[16px] bg-white p-4 max-md:static">
+            <div className="absolute top-[413px] left-[283px] z-20 flex w-[258px] flex-col gap-2 rounded-[16px] bg-white p-4">
               <div className="flex flex-col">
                 <span className="text-[16px] leading-[24px] font-medium text-neutral-950">Happy Students</span>
                 <div className="flex items-center gap-2">
@@ -392,7 +429,7 @@ function GrowthSection() {
             <Ornament
               src="/images/e3b55902_387x387.png"
               color="lime"
-              className="left-[305px] top-[114px] z-30 size-[215px] max-md:hidden"
+              className="left-[305px] top-[114px] z-30 size-[215px]"
             />
           </div>
         </div>
@@ -463,12 +500,26 @@ function CreatorCta() {
         <Ornament src="/images/5b3686bc_189x189.png" style={{ left: -50, top: 225, width: 189, height: 189 }} />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center gap-10 px-6 pt-[85px] pb-[84px] text-center">
+      <div className="sm:hidden">
+        <Ornament src="/images/cda676fe_332x332.png" color="white" style={{ left: 28, top: 18, width: 52, height: 52 }} />
+        <Ornament src="/images/e3b55902_387x387.png" color="lime" style={{ left: -26, top: 32, width: 54, height: 54 }} />
+        <Ornament src="/images/5b3686bc_189x189.png" color="lime" style={{ left: 208, top: -16, width: 58, height: 58 }} />
+        <Ornament src="/images/5b3686bc_189x189.png" color="white" style={{ left: 260, top: -18, width: 58, height: 58 }} />
+        <Ornament src="/images/92fc70a3_372x372.png" color="lime" style={{ right: -34, top: -8, width: 66, height: 66 }} />
+        <Ornament src="/images/92fc70a3_372x372.png" color="white" style={{ right: -6, top: 26, width: 68, height: 68 }} />
+        <Ornament src="/images/92fc70a3_372x372.png" color="white" style={{ left: -32, top: 366, width: 64, height: 64 }} />
+        <Ornament src="/images/e3b55902_387x387.png" color="lime" style={{ left: -22, top: 436, width: 66, height: 66 }} />
+        <Ornament src="/images/f9c0e0fd_189x189.png" color="white" style={{ left: 174, top: 428, width: 46, height: 46 }} />
+        <Ornament src="/images/cda676fe_332x332.png" color="white" style={{ right: 54, top: 448, width: 56, height: 56 }} />
+        <Ornament src="/images/92fc70a3_372x372.png" color="lime" style={{ right: -22, top: 456, width: 62, height: 62 }} />
+      </div>
+
+      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center gap-10 px-4 pt-[56px] pb-[56px] text-center sm:px-6 sm:pt-[85px] sm:pb-[84px]">
         <div className="flex max-w-[964px] flex-col items-center gap-10">
-          <h2 className="max-w-[710px] font-heading text-[32px] leading-[38px] font-semibold tracking-[-0.01em] text-neutral-50 md:text-[44px] md:leading-[53px]">
+          <h2 className="max-w-[710px] font-heading text-[28px] leading-[33.6px] font-semibold tracking-[-0.01em] text-neutral-50 sm:text-[32px] sm:leading-[38px] md:text-[44px] md:leading-[53px]">
             Unlock Your Potential as a Creator with ByteSpace
           </h2>
-          <p className="text-[16px] leading-[26px] text-neutral-50 lg:text-[18px] lg:leading-[29px]">
+          <p className="text-[16px] leading-[25.6px] text-neutral-50 sm:text-[16px] sm:leading-[26px] lg:text-[18px] lg:leading-[29px]">
             Experience the collaboration of numerous creators and an expanding selection of courses.
             Register now and become a part of a community comprising over 10,000 local and
             international creators. Utilize our Course Editor, and showcase your expertise by
@@ -476,7 +527,7 @@ function CreatorCta() {
           </p>
           <Link
             href="/register"
-            className="inline-flex h-[46px] items-center justify-center gap-2 rounded-[24px] bg-secondary-400 px-6 text-[18px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500"
+            className="inline-flex h-[46px] items-center justify-center gap-2 rounded-[24px] bg-secondary-400 px-6 text-[16px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500 sm:text-[18px]"
           >
             Join as Creator
           </Link>
@@ -489,16 +540,16 @@ function CreatorCta() {
 function Testimonials() {
   return (
     <section className="relative isolate w-full overflow-hidden bg-[#fafafa]">
-      <GlowBlob color="lime" radial strength={0.4} className="top-[-241px] left-[842px] size-[1137px]" />
-      <GlowBlob color="lime" radial strength={0.6} className="top-[-138px] left-[395px] size-[672px]" />
-      <GlowBlob color="blue" radial strength={0.24} className="top-[149px] -left-[442px] size-[1137px]" />
+      <GlowBlob color="lime" radial strength={0.4} className="max-sm:top-[116px] max-sm:left-[102px] max-sm:size-[560px] sm:top-[-241px] sm:left-[842px] sm:size-[1137px]" />
+      <GlowBlob color="lime" radial strength={0.6} className="max-sm:top-[69px] max-sm:left-[28px] max-sm:size-[340px] sm:top-[-138px] sm:left-[395px] sm:size-[672px]" />
+      <GlowBlob color="blue" radial strength={0.24} className="max-sm:top-[587px] max-sm:-left-[246px] max-sm:size-[560px] sm:top-[149px] sm:-left-[442px] sm:size-[1137px]" />
 
-      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-[72px] px-[40px] pt-[74px] pb-[57px] lg:px-[118px]">
-        <div className="flex flex-col items-start gap-[43px] lg:flex-row lg:items-end">
-          <h2 className="max-w-[577px] flex-1 font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-black md:text-[44px] md:leading-[53px]">
+      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-[40px] px-4 pt-[40px] pb-[40px] sm:gap-[72px] sm:px-[40px] sm:pt-[74px] sm:pb-[57px] lg:px-[118px]">
+        <div className="flex flex-col items-start gap-6 sm:gap-[43px] lg:flex-row lg:items-end">
+          <h2 className="max-w-[577px] flex-1 font-heading text-[36px] leading-[43px] font-semibold tracking-[-0.01em] text-black md:text-[44px] md:leading-[53px] max-sm:text-[28px] max-sm:leading-[34px] max-sm:tracking-[-0.44px]">
             Discover What Our Community Is Saying
           </h2>
-          <p className="max-w-[580px] text-[18px] leading-[29px] text-[#4f4f4f]">
+          <p className="max-w-[580px] text-[18px] leading-[29px] text-[#4f4f4f] sm:text-[18px] sm:leading-[29px]">
             At ByteSpace, our vibrant community of learners and creators is at the heart of what we
             do. Hear directly from those who have experienced the transformative journey of learning
             and creating on our platform. Explore testimonials that reflect the diverse perspectives
@@ -506,22 +557,7 @@ function Testimonials() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 items-start gap-[41px] md:grid-cols-2 xl:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <figure key={t.name} className="flex flex-col gap-6 rounded-[24px] bg-white p-6">
-              <Image src={t.avatar} alt={t.name} width={80} height={80} className="size-20 rounded-full object-cover" />
-              <figcaption className="flex flex-col">
-                <span
-                  className={`font-heading text-[20px] font-semibold tracking-[-0.01em] text-black ${i === 0 ? "leading-6" : "leading-[28px]"}`}
-                >
-                  {t.name}
-                </span>
-                <span className="text-[18px] leading-[29px] text-primary-800">{t.role}</span>
-              </figcaption>
-              <blockquote className="text-[18px] leading-[29px] text-[#4f4f4f]">{t.quote}</blockquote>
-            </figure>
-          ))}
-        </div>
+        <TestimonialsCarousel items={testimonials} />
       </div>
     </section>
   );

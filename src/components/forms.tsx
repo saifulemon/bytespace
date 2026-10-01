@@ -6,7 +6,7 @@ import { SearchIcon } from "@/components/icons";
 import { useToast } from "@/components/feedback";
 
 const buttonClass =
-  "inline-flex h-[46px] shrink-0 items-center justify-center gap-2 rounded-[24px] bg-secondary-400 px-6 text-[18px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500";
+  "inline-flex h-[46px] shrink-0 items-center justify-center gap-2 rounded-[24px] bg-secondary-400 px-6 text-[18px] leading-[22px] font-medium text-neutral-950 transition-colors hover:bg-secondary-500 max-sm:w-full";
 
 export function HeroSearchBar() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export function HeroSearchBar() {
 
   return (
     <form
-      className="flex w-full max-w-[581px] flex-col gap-[14px] sm:flex-row sm:items-center sm:gap-4"
+      className="flex w-full max-w-[581px] flex-col gap-[18px] sm:flex-row sm:items-center sm:gap-4"
       onSubmit={submit}
       role="search"
     >
@@ -38,7 +38,7 @@ export function HeroSearchBar() {
       <button
         type="submit"
         data-testid="hero-search-submit"
-        className={`${buttonClass} w-full sm:w-auto max-sm:h-[40px] max-sm:text-[16px]`}
+        className={`${buttonClass} w-full sm:w-auto`}
       >
         Search
       </button>
@@ -71,7 +71,7 @@ export function NewsletterForm() {
 
   return (
     <form className="flex flex-col gap-6" onSubmit={submit} noValidate>
-      <div className="flex flex-wrap items-center gap-6">
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6">
         <input
           type="email"
           placeholder="Enter your email"
@@ -83,9 +83,13 @@ export function NewsletterForm() {
             if (error) setError("");
             if (done) setDone(false);
           }}
-          className="h-[52px] w-full max-w-[376px] rounded-full border border-hairline px-6 text-[16px] leading-[26px] text-neutral-950 outline-none placeholder:text-neutral-950 focus:border-primary-600"
+          className="h-[52px] w-full max-w-[376px] rounded-full border border-hairline px-6 text-[16px] leading-[26px] text-neutral-950 outline-none placeholder:text-neutral-950 focus:border-primary-600 max-sm:h-[48px] max-sm:text-[14px] max-sm:leading-[20px]"
         />
-        <button type="submit" data-testid="newsletter-submit" className={buttonClass}>
+        <button
+          type="submit"
+          data-testid="newsletter-submit"
+          className={`${buttonClass} max-sm:h-[48px] max-sm:text-[14px] max-sm:leading-[20px]`}
+        >
           Search
         </button>
       </div>
@@ -99,7 +103,7 @@ export function NewsletterForm() {
           Thanks! We&apos;ll send new releases to {email || "your inbox"}.
         </p>
       ) : null}
-      <p className="max-w-[504px] text-[12px] leading-[19px] text-neutral-950">
+      <p className="max-w-[504px] text-[12px] leading-[19px] text-neutral-950 max-sm:text-[13px] max-sm:leading-[24px]">
         By subscribing, you agree to our Privacy Policy and consent to receive updates from our
         company.
       </p>

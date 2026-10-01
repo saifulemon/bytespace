@@ -53,6 +53,10 @@ export function Ornament({
 }) {
   const tinted = src.replace(/\.png$/, `-${color}.png`);
 
+  let hash = 0;
+  for (let i = 0; i < src.length; i++) hash = (hash * 31 + src.charCodeAt(i)) % 997;
+  const float = ["ornament-float-a", "ornament-float-b", "ornament-float-c"][hash % 3];
+
   return (
     // Decorative artwork; kept unoptimized so absolute positioning stays exact.
     // eslint-disable-next-line @next/next/no-img-element
@@ -60,7 +64,7 @@ export function Ornament({
       src={tinted}
       alt=""
       aria-hidden
-      className={cn("pointer-events-none absolute object-contain", className)}
+      className={cn("pointer-events-none absolute object-contain", float, className)}
       style={style}
     />
   );
@@ -113,11 +117,11 @@ export function Logoipsum({ variant = 0 }: { variant?: number }) {
   ];
 
   return (
-    <div className="flex h-[28px] w-[115px] items-center gap-2 text-neutral-400 sm:h-[42px] sm:w-[170px] sm:gap-3">
-      <svg viewBox="0 0 40 40" className="size-7 shrink-0 sm:size-10" aria-hidden>
+    <div className="flex h-[37px] w-[145px] items-center gap-2.5 text-neutral-400 sm:h-[42px] sm:w-[170px] sm:gap-3">
+      <svg viewBox="0 0 40 40" className="size-9 shrink-0 sm:size-10" aria-hidden>
         {marks[variant % marks.length]}
       </svg>
-      <span className="text-[13px] leading-none font-bold tracking-tight text-neutral-400 sm:text-[19px]">
+      <span className="text-[17px] leading-none font-bold tracking-tight text-neutral-400 sm:text-[19px]">
         Logoipsum
       </span>
     </div>

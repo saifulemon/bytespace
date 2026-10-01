@@ -29,14 +29,14 @@ export function Logo({
   return (
     <Link
       href="/"
-      className="relative block h-[26px] w-[120px] shrink-0 sm:h-[37px] sm:w-[171px]"
+      className="relative block h-[34px] w-[150px] shrink-0 sm:h-[37px] sm:w-[171px]"
       aria-label="ByteSpace home"
     >
-      <LogoMark className="absolute top-0 left-0 h-[21.3px] w-[19.6px] text-secondary-400 sm:h-[31.5px] sm:w-[28.9px]" />
+      <LogoMark className="absolute top-0 left-0 h-[26px] w-[24px] text-secondary-400 sm:h-[31.5px] sm:w-[28.9px]" />
       {wordmark ? (
         <span
           className={cn(
-            "absolute top-[4px] left-[26px] font-logo text-[18px] leading-[22px] font-bold whitespace-nowrap sm:top-[7px] sm:left-[37px] sm:text-[24px] sm:leading-[30px]",
+            "absolute top-[5px] left-[31px] font-logo text-[20px] leading-[25px] font-bold whitespace-nowrap sm:top-[7px] sm:left-[37px] sm:text-[24px] sm:leading-[30px]",
             dark ? "text-neutral-950" : "text-neutral-50",
           )}
         >
@@ -53,7 +53,7 @@ export function Logo({
  * rendered at page root instead (see <Header />).
  */
 export function HeaderSlot() {
-  return <div aria-hidden="true" className="h-[76px] w-full sm:h-[120px]" />;
+  return <div aria-hidden="true" className="h-[72px] w-full sm:h-[120px]" />;
 }
 
 /** Underline that scales in when the link points at the current route. */
@@ -147,7 +147,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
         "transition-[height,background-color,box-shadow] duration-300 ease-out",
         stuck
           ? "h-[64px] bg-white shadow-[0_1px_0_0_#e5e6e8,0_18px_44px_-30px_rgba(16,24,40,0.5)] sm:h-[80px]"
-          : "h-[76px] bg-transparent shadow-none sm:h-[120px]",
+          : "h-[72px] bg-transparent shadow-none sm:h-[120px]",
       )}
     >
       <Container className="flex h-full items-center justify-between">
@@ -266,14 +266,14 @@ export function Footer() {
 
   return (
     <footer className="w-full border-t border-hairline bg-white">
-      <Container className="flex flex-col gap-14 pt-12 pb-10 md:gap-24 md:pt-[70px] md:pb-[48px] min-[1440px]:gap-[130px]!">
-        <div className="flex flex-col gap-10 md:gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]!">
-          <div className="flex w-full shrink-0 flex-col gap-8 md:gap-[45px] min-[1440px]:w-[528px]">
-            <div className="flex flex-col gap-4">
-              <div className="h-[37px]">
+      <Container className="flex flex-col gap-[50px] pt-[35px] pb-10 max-md:pb-[30px] md:gap-24 md:pt-[70px] md:pb-[48px] min-[1440px]:gap-[130px]!">
+        <div className="flex flex-col gap-10 max-md:gap-12 md:gap-12 min-[1440px]:flex-row min-[1440px]:gap-[92px]!">
+          <div className="flex w-full shrink-0 flex-col gap-[25px] md:gap-[45px] min-[1440px]:w-[528px]">
+            <div className="flex flex-col gap-4 max-sm:gap-6">
+              <div className="h-[37px] max-sm:h-[42px]">
                 <Logo dark />
               </div>
-              <p className="text-[14px] leading-[22px] text-neutral-950">
+              <p className="text-[14px] leading-[22px] text-neutral-950 max-sm:leading-[24px]">
                 Stay Up to date with our latest features and releases by joining our newsletter.
               </p>
             </div>
@@ -281,10 +281,10 @@ export function Footer() {
             <NewsletterForm />
           </div>
 
-          <div className="flex flex-1 flex-wrap gap-x-6 gap-y-8 md:gap-x-10 md:gap-y-10 min-[1440px]:flex-nowrap min-[1440px]:items-start min-[1440px]:justify-between">
+          <div className="flex flex-1 flex-wrap gap-x-6 gap-y-8 max-md:gap-y-[40px] md:gap-x-10 md:gap-y-10 min-[1440px]:flex-nowrap min-[1440px]:items-start min-[1440px]:justify-between">
             <div className="flex w-[calc(50%_-_12px)] shrink-0 flex-col gap-6 sm:w-[calc(50%_-_20px)] md:w-[167px]">
-              <span className="text-[16px] leading-6 text-neutral-950">Browse</span>
-              <ul className="flex flex-col gap-4">
+              <span className="hidden text-[16px] leading-6 text-neutral-950 sm:block">Browse</span>
+              <ul className="flex flex-col gap-4 max-md:gap-4">
                 {footerBrowse.slice(0, 5).map((l) => (
                   <FooterLink key={l.label} {...l} />
                 ))}
@@ -298,16 +298,16 @@ export function Footer() {
             </ul>
 
             <div className="flex w-[calc(50%_-_12px)] shrink-0 flex-col gap-6 sm:w-[calc(50%_-_20px)] md:w-[166px]">
-              <span className="text-[16px] leading-6 text-neutral-950">Platform</span>
-              <ul className="flex flex-col gap-4">
+              <span className="hidden text-[16px] leading-6 text-neutral-950 sm:block">Platform</span>
+              <ul className="flex flex-col gap-4 max-md:gap-4">
                 {footerPlatform.map((l) =>
                   infoPages[l.label] ? (
-                    <li key={l.label} className="text-[14px] leading-[22px]">
+                    <li key={l.label} className="text-[14px] leading-[22px] max-md:text-[16px] max-md:leading-[24px]">
                       <button
                         type="button"
                         data-testid={`footer-${l.label.toLowerCase()}`}
                         onClick={() => setInfo(l.label)}
-                        className="relative inline-block leading-[22px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
+                        className="relative inline-block leading-[24px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
                       >
                         {l.label}
                       </button>
@@ -321,20 +321,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-[22px]">
+        <div className="flex flex-col gap-[22px] max-md:gap-4">
           <div className="h-px w-full bg-hairline" />
-          <div className="flex flex-col justify-between gap-4 sm:flex-row">
-            <p className="text-[12px] leading-[19px] text-neutral-950">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-center text-[12px] leading-[19px] text-neutral-950 max-sm:text-[13px] max-sm:leading-[19.5px]">
               @ 2023 ByteSpace. All rights reserved.
             </p>
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {["Privacy Policy", "Terms of Service", "Cookies Settings"].map((l) => (
                 <button
                   key={l}
                   type="button"
                   data-testid={`footer-${l.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => setInfo(l)}
-                  className="relative inline-block text-left text-[12px] leading-[19px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
+                  className="relative inline-block text-left text-[12px] leading-[19px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600 max-sm:text-[13px] max-sm:leading-[20px]"
                 >
                   {l}
                 </button>
@@ -373,7 +373,7 @@ export function Footer() {
 
 function FooterLink({ label, href }: { label: string; href: string }) {
   return (
-    <li className="text-[14px] leading-[22px]">
+    <li className="text-[14px] leading-[22px] max-md:text-[16px] max-md:leading-[24px]">
       <Link
         href={href}
         className="relative inline-block leading-[22px] text-neutral-950 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] hover:text-primary-600"
@@ -418,7 +418,7 @@ export function SectionHeading({
 }: {
   eyebrow?: string;
   title: ReactNode;
-  description?: string;
+  description?: ReactNode;
   align?: "center" | "left";
   className?: string;
 }) {
@@ -435,11 +435,11 @@ export function SectionHeading({
           {eyebrow}
         </span>
       ) : null}
-      <h2 className="max-w-[588px] font-heading text-[27px] leading-[33px] font-semibold tracking-[-0.01em] text-neutral-950 sm:text-[36px] sm:leading-[43px] md:text-[44px] md:leading-[53px]">
+      <h2 className="max-w-[588px] font-heading text-[30px] leading-[37.5px] font-semibold tracking-normal text-neutral-950 sm:text-[36px] sm:leading-[43px] sm:tracking-[-0.01em] md:text-[44px] md:leading-[53px] max-sm:font-bold">
         {title}
       </h2>
       {description ? (
-        <p className="max-w-[917px] text-[13px] leading-[20px] text-body sm:text-[18px] sm:leading-[29px]">
+        <p className="max-w-[917px] text-[14px] leading-[22.75px] text-body sm:text-[18px] sm:leading-[29px]">
           {description}
         </p>
       ) : null}
