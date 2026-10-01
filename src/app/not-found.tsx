@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <section className="relative isolate h-[957px] w-full overflow-hidden bg-primary-800">
+      <section data-aos="fade-up" className="relative isolate h-[957px] w-full overflow-hidden bg-primary-800">
         <GridBackdrop />
 
         <HeaderSlot />

@@ -154,20 +154,6 @@
     drop-shadow(72px 51.04px 72.91px rgb(0 0 0 / 0.13));
 }
 
-/* ---------- Scroll reveal (added by ScrollReveal) ---------- */
-.reveal-block {
-  opacity: 0;
-  transform: translateY(34px);
-}
-
-.reveal-block.is-revealed {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 /* ---------- Infinite hero ornament float ---------- */
 @keyframes ornament-float-a {
   0%,
@@ -212,12 +198,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-block {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
   .ornament-float-a,
   .ornament-float-b,
   .ornament-float-c {

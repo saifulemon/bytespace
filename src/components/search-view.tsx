@@ -122,7 +122,7 @@ export function SearchView() {
 
   return (
     <>
-      <section className="relative isolate h-[430px] w-full overflow-hidden bg-primary-800 sm:h-[360px]">
+      <section data-aos="fade-up" className="relative isolate h-[430px] w-full overflow-hidden bg-primary-800 sm:h-[360px]">
         <GridBackdrop />
         <HeaderSlot />
 
