@@ -153,3 +153,74 @@
     drop-shadow(56px 37.12px 53.03px rgb(0 0 0 / 0.11))
     drop-shadow(72px 51.04px 72.91px rgb(0 0 0 / 0.13));
 }
+
+/* ---------- Scroll reveal (added by ScrollReveal) ---------- */
+.reveal-block {
+  opacity: 0;
+  transform: translateY(34px);
+}
+
+.reveal-block.is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Infinite hero ornament float ---------- */
+@keyframes ornament-float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0) rotate(4deg);
+  }
+}
+
+@keyframes ornament-float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6px, 14px, 0) rotate(-5deg);
+  }
+}
+
+@keyframes ornament-float-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) rotate(3deg);
+  }
+}
+
+.ornament-float-a {
+  animation: ornament-float-a 7s ease-in-out -1.2s infinite;
+}
+
+.ornament-float-b {
+  animation: ornament-float-b 8.5s ease-in-out -3.4s infinite;
+}
+
+.ornament-float-c {
+  animation: ornament-float-c 10s ease-in-out -5.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-block {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .ornament-float-a,
+  .ornament-float-b,
+  .ornament-float-c {
+    animation: none !important;
+  }
+}

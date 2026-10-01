@@ -25,7 +25,7 @@ export function CourseCard({
         className,
       )}
     >
-      <div className="@container relative h-[195px] w-full overflow-hidden rounded-[12px] bg-[#443131]">
+      <div className="relative aspect-[341/195] w-full overflow-hidden rounded-[12px] bg-[#443131]">
         <Image
           src={course.thumbnail}
           alt={course.title}
@@ -33,19 +33,11 @@ export function CourseCard({
           sizes="(max-width: 768px) 100vw, 341px"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
-        <div className="absolute right-[4.11cqw] bottom-[3.81cqw] left-[3.52cqw] flex items-center justify-between gap-[1.5cqw] min-[1440px]:hidden">
-          {[course.lessons, course.duration, course.comments].map((label, index) => (
-            <span
-              key={label}
-              className={cn(
-                "flex shrink-0 items-center rounded-full bg-[rgba(246,246,246,0.6)] px-[3.5cqw] py-[1.72cqw] text-[clamp(10px,3.5cqw,12px)] leading-[1.6] font-medium whitespace-nowrap text-[#4f4f4f]",
-                index === 2 && "@max-[280px]:hidden",
-              )}
-            >
-              {label}
-            </span>
-          ))}
-        </div>
+        <ul className="sr-only">
+          <li>{course.lessons}</li>
+          <li>{course.duration}</li>
+          <li>{course.comments}</li>
+        </ul>
       </div>
 
       <div className="mt-[21px] flex flex-col gap-4">
@@ -54,7 +46,7 @@ export function CourseCard({
             <Link
               href="/course"
               className={cn(
-                "block max-w-[280px] truncate font-heading text-[20px] font-semibold tracking-[-0.01em] text-black hover:text-primary-600",
+                "block max-w-full truncate font-heading text-[18px] font-semibold tracking-[-0.01em] text-black hover:text-primary-600 sm:text-[20px]",
                 tight ? "leading-[24px]" : "leading-[28px]",
               )}
             >

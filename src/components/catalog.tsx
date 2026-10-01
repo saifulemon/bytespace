@@ -116,12 +116,14 @@ function ChipButton({
   active,
   onClick,
   testId,
+  className,
 }: {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
   onClick: () => void;
   testId: string;
+  className?: string;
 }) {
   return (
     <button
@@ -129,7 +131,7 @@ function ChipButton({
       data-testid={testId}
       aria-pressed={active}
       onClick={onClick}
-      className={cn(chipBase, active ? chipActive : chipIdle)}
+      className={cn(chipBase, active ? chipActive : chipIdle, className)}
     >
       <span className="grid size-6 place-items-center">{icon}</span>
       {label}
@@ -157,7 +159,7 @@ export function FilterChips({
 
   return (
     <div className={className}>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4">
         <ChipButton
           icon={<FilterIcon className="size-5" />}
           label={count ? `Filter (${count})` : "Filter"}
@@ -179,14 +181,15 @@ export function FilterChips({
           onClick={() => onOpen("category")}
           testId="chip-category"
         />
+        <ChipButton
+          className="lg:ml-auto"
+          icon={<SortIcon className="size-5" />}
+          label={sortLabel}
+          active={state.sort !== "relevant"}
+          onClick={() => onOpen("sort")}
+          testId="chip-sort"
+        />
       </div>
-      <ChipButton
-        icon={<SortIcon className="size-5" />}
-        label={sortLabel}
-        active={state.sort !== "relevant"}
-        onClick={() => onOpen("sort")}
-        testId="chip-sort"
-      />
     </div>
   );
 }

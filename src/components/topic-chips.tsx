@@ -34,7 +34,7 @@ function Chip({ label }: { label: string }) {
       type="button"
       data-testid={`topic-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
       onClick={() => router.push(topicHref(label))}
-      className={`rounded-[24px] px-[10px] py-[5px] text-[11px] leading-[15px] font-medium transition-colors sm:px-4 sm:py-3 sm:text-[16px] sm:leading-[19px] ${
+      className={`rounded-[24px] px-3 py-[6px] text-[12px] leading-[16px] font-medium transition-colors sm:px-4 sm:py-3 sm:text-[16px] sm:leading-[19px] ${
         active
           ? "bg-secondary-400 text-neutral-950"
           : "bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
@@ -55,7 +55,7 @@ function MoreTopics() {
         type="button"
         data-testid="topic-more"
         onClick={() => setOpen(true)}
-        className="text-[16px] leading-[19px] font-medium text-primary-800"
+        className="text-[14px] leading-[19px] font-medium text-primary-800 sm:text-[16px]"
       >
         + More
       </button>

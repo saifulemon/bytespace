@@ -209,7 +209,7 @@ export function SearchView() {
 
       <main className="mx-auto w-full max-w-[1440px] px-6 lg:px-[120px]">
         <FilterChips
-          className="flex flex-wrap items-center justify-between gap-4 pt-[72px] min-[1440px]:-ml-px"
+          className="pt-[72px] min-[1440px]:-ml-px"
           state={state}
           onOpen={setMode}
         />
