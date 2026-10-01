@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ComponentProps, ReactNode } from "react";
-import { FacebookIcon, GoogleIcon, StarIcon } from "@/components/icons";
+import { StarIcon } from "@/components/icons";
 import { GridBackdrop, Ornament } from "@/components/decor";
 import { Logo } from "@/components/site";
 import { cn } from "@/lib/cn";
@@ -154,18 +154,20 @@ export function AuthButton({ children, ...props }: { children: ReactNode } & Com
 export function SocialRow({ onSelect }: { onSelect?: (provider: "Facebook" | "Google") => void }) {
   return (
     <div className="flex items-center justify-center gap-4">
-      {[FacebookIcon, GoogleIcon].map((Icon, i) => {
-        const provider = i === 0 ? "Facebook" : "Google";
+      {["facebook", "google"].map((provider) => {
+        const label = provider === "facebook" ? "Facebook" : "Google";
         return (
           <button
             key={provider}
             type="button"
-            data-testid={`social-${provider.toLowerCase()}`}
-            aria-label={`Continue with ${provider}`}
-            onClick={() => onSelect?.(provider)}
-            className="grid size-[72px] place-items-center rounded-[24px] border border-[#d1d1d1] text-black transition-colors hover:border-neutral-950"
+            data-testid={`social-${provider}`}
+            aria-label={`Continue with ${label}`}
+            onClick={() => onSelect?.(label)}
+            className="grid size-[72px] place-items-center rounded-[24px] transition-colors hover:opacity-80"
           >
-            <Icon className="size-10" />
+            {/* Full 72x72 frame incl. border, straight from Figma */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/icons/${provider}.svg`} alt="" className="size-[72px]" />
           </button>
         );
       })}

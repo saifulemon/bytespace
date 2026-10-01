@@ -229,13 +229,13 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
                   aria-current={active ? "page" : undefined}
-                  className="border-b border-neutral-100 py-3 text-[16px] leading-[26px] text-neutral-950 last:border-b-0 hover:text-primary-600"
+                  className="border-b border-neutral-100 py-3 text-[16px] leading-[26px] text-neutral-950 [&:last-of-type]:border-b-0 hover:text-primary-600"
                 >
                   <NavLabel active={active}>{l.label}</NavLabel>
                 </Link>
               );
             })}
-            <div className="mt-3 flex items-center gap-3 border-t border-neutral-100 pt-3 sm:hidden">
+            <div className="mt-3 flex items-center gap-3 pt-3 sm:hidden">
               <Link
                 href="/login"
                 onClick={() => setMenuOpen(false)}

@@ -70,57 +70,37 @@ export function Ornament({
   );
 }
 
+const LOGOSUM_FILES = [
+  "logoipsum1.png",
+  "logoipsum2-full-frame.svg",
+  "logoipsum3.svg",
+  "logoipsum4.svg",
+  "logoipsum5.svg",
+];
+
 export function Logoipsum({ variant = 0 }: { variant?: number }) {
-  const marks = [
-    <g key="0">
-      <circle cx="20" cy="20" r="20" fill="currentColor" />
-      <path
-        d="M6 15c4-3 8-3 12 0M6 21c4-3 8-3 12 0M8 27c4-3 8-3 12 0"
-        stroke="#f5f5f6"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </g>,
-    <g key="1">
-      <circle cx="20" cy="20" r="6" fill="currentColor" />
-      {Array.from({ length: 12 }).map((_, i) => {
-        const a = (i * Math.PI * 2) / 12;
-        const x1 = 20 + Math.cos(a) * 10;
-        const y1 = 20 + Math.sin(a) * 10;
-        const x2 = 20 + Math.cos(a) * 19;
-        const y2 = 20 + Math.sin(a) * 19;
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="3" strokeLinecap="round" />;
-      })}
-    </g>,
-    <g key="2">
-      <circle cx="20" cy="20" r="20" fill="currentColor" />
-      <path d="M23 8l-9 13h6l-3 11 10-14h-6l2-10Z" fill="#f5f5f6" />
-    </g>,
-    <g key="3">
-      <circle cx="20" cy="20" r="20" fill="currentColor" />
-      <path
-        d="M13 13l7 7 7-7M13 27l7-7 7 7"
-        stroke="#f5f5f6"
-        strokeWidth="3.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </g>,
-    <g key="4">
-      <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" strokeWidth="2" />
-      <ellipse cx="20" cy="20" rx="8" ry="19" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M2 14h36M2 26h36" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M6 8c9 6 19 6 28 0M6 32c9-6 19-6 28 0" stroke="currentColor" strokeWidth="1.6" fill="none" />
-    </g>,
-  ];
+  const index = variant % LOGOSUM_FILES.length;
+  const src = `/icons/${LOGOSUM_FILES[index]}`;
+
+  // 2nd asset is a full frame (mark + wordmark) — no separate text next to it.
+  if (index === 1) {
+    return (
+      <div className="flex h-[37px] items-center sm:h-[42px]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="Logoipsum" className="h-[37px] w-auto sm:h-[42px]" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-[37px] w-[145px] items-center gap-2.5 text-neutral-400 sm:h-[42px] sm:w-[170px] sm:gap-3">
-      <svg viewBox="0 0 40 40" className="size-9 shrink-0 sm:size-10" aria-hidden>
-        {marks[variant % marks.length]}
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden
+        className="size-9 shrink-0 object-contain sm:size-10"
+      />
       <span className="text-[17px] leading-none font-bold tracking-tight text-neutral-400 sm:text-[19px]">
         Logoipsum
       </span>
