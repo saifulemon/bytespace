@@ -35,7 +35,7 @@ export default function NotFound() {
           </span>
         </div>
 
-        <div className="absolute inset-x-0 top-[521px] flex flex-col items-center gap-8 px-6">
+        <div className="absolute inset-x-0 top-[521px] max-sm:top-[380px] flex flex-col items-center gap-8 px-6">
           <h1
             className="max-w-[935px] text-center font-heading text-[40px] leading-[48px] font-semibold tracking-[-0.01em] text-white md:text-[72px] md:leading-[86px]"
             style={{ wordSpacing: "-0.0185em" }}
