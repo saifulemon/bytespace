@@ -61,7 +61,7 @@ export default function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-primary-800">
+    <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-primary-800">
       <div className="relative mx-auto h-[834px] w-full max-w-[1440px] sm:h-[1024px]">
         <GridBackdrop />
 
@@ -206,7 +206,7 @@ function AvatarRow({ count = 7, overflow = "2K+" }: { count?: number; overflow?:
 
 function Partners() {
   return (
-    <section className="w-full bg-neutral-50">
+    <section data-aos="fade-up" className="w-full bg-neutral-50">
       <Container className="flex min-h-[216px] items-center justify-center py-6 sm:min-h-[202px]">
         <div className="flex flex-wrap items-center justify-center gap-x-[50px] gap-y-[10px] sm:gap-x-[72px] sm:gap-y-6">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -220,7 +220,7 @@ function Partners() {
 
 function CourseShowcase() {
   return (
-    <section className="w-full bg-white">
+    <section data-aos="fade-up" className="w-full bg-white">
       <Container className="flex flex-col items-center pt-[30px] sm:pt-[72px]">
         <SectionHeading
           title="Discover Your Passion, Build Your Skills"
@@ -261,7 +261,7 @@ function CourseShowcase() {
 
 function CategoriesSection() {
   return (
-    <section className="w-full bg-white">
+    <section data-aos="fade-up" className="w-full bg-white">
       <Container className="flex flex-col items-center pt-[30px] pb-[30px] sm:pt-[72px] sm:pb-[120px]">
         <SectionHeading
           title="Explore Diverse Learning Paths at Bytespace"
@@ -307,7 +307,7 @@ function CategoriesSection() {
 
 function GrowthSection() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-[#fafafa]">
+    <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-[#fafafa]">
       <GlowBlob color="lime" radial strength={0.4} className="max-sm:-top-[171px] max-sm:-left-[167px] max-sm:size-[560px] sm:-top-[466px] sm:-left-[152px] sm:size-[1137px]" />
       <GlowBlob color="blue" radial strength={0.16} className="max-sm:top-[521px] max-sm:-left-[264px] max-sm:size-[560px] sm:top-[183px] sm:-left-[508px] sm:size-[1137px]" />
       <GlowBlob color="blue" radial strength={0.08} className="max-sm:-top-[162px] max-sm:left-[94px] max-sm:size-[560px] sm:-top-[458px] sm:left-[811px] sm:size-[1137px]" />
@@ -488,7 +488,7 @@ function BlueStat({
 
 function CreatorCta() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-primary-800">
+    <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-primary-800">
       <GridBackdrop />
       <div className="hidden lg:block">
         <Ornament src="/images/e3b55902_387x387.png" color="lime" style={{ left: -122, top: -162, width: 387, height: 387 }} />
@@ -539,7 +539,7 @@ function CreatorCta() {
 
 function Testimonials() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-[#fafafa]">
+    <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-[#fafafa]">
       <GlowBlob color="lime" radial strength={0.4} className="max-sm:top-[116px] max-sm:left-[102px] max-sm:size-[560px] sm:top-[-241px] sm:left-[842px] sm:size-[1137px]" />
       <GlowBlob color="lime" radial strength={0.6} className="max-sm:top-[69px] max-sm:left-[28px] max-sm:size-[340px] sm:top-[-138px] sm:left-[395px] sm:size-[672px]" />
       <GlowBlob color="blue" radial strength={0.24} className="max-sm:top-[587px] max-sm:-left-[246px] max-sm:size-[560px] sm:top-[149px] sm:-left-[442px] sm:size-[1137px]" />

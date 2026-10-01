@@ -14,7 +14,7 @@ export default function CreatorPage() {
   return (
     <>
       <Header />
-      <section className="relative isolate w-full overflow-hidden bg-primary-800">
+      <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-primary-800">
         <GridBackdrop />
         <HeaderSlot />
 

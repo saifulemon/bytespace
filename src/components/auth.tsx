@@ -19,7 +19,7 @@ export function AuthShell({
   children: ReactNode;
 }) {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-primary-800">
+    <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-primary-800">
       <GridBackdrop />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-24 lg:h-[1024px] lg:px-0 lg:pb-0">

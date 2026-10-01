@@ -4,7 +4,8 @@ import localFont from "next/font/local";
 import { CartProvider } from "@/components/cart";
 import { ToastProvider } from "@/components/feedback";
 import { PreviewProvider } from "@/components/preview-modal";
-import { ScrollReveal } from "@/components/scroll-reveal";
+import { AosInit } from "@/components/aos-init";
+import "aos/dist/aos.css";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -43,7 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${poppins.variable} ${satoshi.variable} ${clash.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-white">
-        <ScrollReveal />
+        <AosInit />
         <ToastProvider>
           <CartProvider>
             <PreviewProvider>{children}</PreviewProvider>

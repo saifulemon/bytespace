@@ -35,13 +35,13 @@ export function CourseShell({
   return (
     <div className="relative">
       <Header />
-      <section className="relative isolate w-full overflow-hidden bg-primary-800">
+      <section data-aos="fade-up" className="relative isolate w-full overflow-hidden bg-primary-800">
         <GridBackdrop />
         <HeaderSlot />
         <CourseHero />
       </section>
 
-      <section className="bg-white">
+      <section data-aos="fade-up" className="bg-white">
         <div className="mx-auto w-full max-w-[1440px] px-6 pb-16 lg:px-[120px] lg:pb-0">
           <div className={`flex flex-wrap gap-4 pt-14 min-[1440px]:w-[725px] ${tabPtClass}`}>
             {tabs.map((tab) => (
